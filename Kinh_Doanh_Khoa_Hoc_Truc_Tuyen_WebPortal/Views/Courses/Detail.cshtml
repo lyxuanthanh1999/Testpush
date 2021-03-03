@@ -1,0 +1,518 @@
+﻿@using System.Globalization
+@using Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_WebPortal.Extensions
+
+@model CourseDetailClientViewModel
+@{
+    var env = "https://localhost:44342";
+    var imageCourse = env + Model.CourseViewModel.Image;
+    var imageUser = env + Model.UserViewModel.Avatar;
+    var user = "";
+    var checkActiveCourse = false;
+    if (User.Identity.IsAuthenticated)
+    {
+        user = User.GetUserId();
+        checkActiveCourse = Model.ActiveCoursesViewModels.Any(x => x.CourseId == Model.CourseViewModel.Id);
+    }
+}
+@section Scripts{
+    <script src="~/assets/js/custom/customCourseDetail.min.js" asp-append-version="true"></script>
+    <script>
+        var products = new CourseJquery();
+        products.initialize();
+    </script>
+}
+<input type="hidden" id="hid_course_id" value="@Model.CourseViewModel.Id" />
+<input type="hidden" id="hid_current_login_id" value="@user" />
+<input type="hidden" id="hid_current_login_name" value="@User.Identity.Name" />
+<input type="hidden" id="hid_number_of_comments" value="@Model.CommentViewModels.Count" />
+<!--====== Section 1 ======-->
+<div class="u-s-p-t-30">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <!--====== Product Breadcrumb ======-->
+                <div class="pd-breadcrumb u-s-m-b-15">
+                    <ul class="pd-breadcrumb__list">
+                        <li class="has-separator">
+                            <a href="/">Trang Chủ</a>
+                        </li>
+                        <li class="has-separator">
+
+                            <a href="/courses.html?categoryId=@Model.CourseViewModel.CategoryId">@Model.CourseViewModel.CategoryName</a>
+                        </li>
+                        <li class="is-marked">
+                            <a href="#">@Model.CourseViewModel.Name</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--====== End - Product Breadcrumb ======-->
+            </div>
+            <div class="col-lg-5">
+                <!--====== Product Detail Zoom ======-->
+                <div class="pd u-s-m-b-30">
+                    <div class="slider-fouc pd-wrap">
+                        <div id="pd-o-initiate">
+                            <div class="pd-o-img-wrap" data-src="@imageCourse">
+                                <img class="u-img-fluid" src="@imageCourse" data-zoom-image="@imageCourse" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="u-s-m-t-15">
+                        <div class="slider-fouc">
+                            <div id="pd-o-thumbnail">
+                                <div>
+                                    <img class="u-img-fluid" src="@imageCourse" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--====== End - Product Detail Zoom ======-->
+            </div>
+            <div class="col-lg-7">
+                <!--====== Product Right Side Details ======-->
+                <div class="pd-detail">
+                    <div>
+
+                        <span class="pd-detail__name">@Model.CourseViewModel.Name</span>
+                    </div>
+                    <div>
+                        <div class="pd-detail__inline">
+                            @if (Model.CourseViewModel.DiscountPercent > 0)
+                            {
+                                var promotionPrice = Model.CourseViewModel.Price - (Model.CourseViewModel.Price * Model.CourseViewModel.DiscountPercent / 100);
+                                <span class="pd-detail__price">
+                                    @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", promotionPrice)
+                                </span>
+                                <span class="pd-detail__discount">(Giảm @Model.CourseViewModel.DiscountPercent%)</span>
+                                <del class="pd-detail__del">
+                                    @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", Model.CourseViewModel.Price)
+                                </del>
+                            }
+                            else if (Model.CourseViewModel.DiscountAmount > 0)
+                            {
+                                var promotionPrice = Model.CourseViewModel.Price - Model.CourseViewModel.DiscountAmount;
+                                <span class="pd-detail__price">
+                                    @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", Model.CourseViewModel.DiscountAmount)
+                                </span>
+                                <span class="pd-detail__discount">(-@string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", promotionPrice))</span>
+                                <del class="pd-detail__del">
+                                    @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", Model.CourseViewModel.Price)
+                                </del>
+                            }
+                            else
+                            {
+                                <span class="pd-detail__price">
+                                    @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", Model.CourseViewModel.Price)
+                                </span>
+                            }
+                        </div>
+                    </div>
+                    <div class="u-s-m-b-15">
+                        <div class="pd-detail__rating gl-rating-style">
+                            <span class="pd-detail__review u-s-m-l-4">
+                                <a data-click-scroll="#view-review">@Model.CommentViewModels.Count Bình luận</a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="u-s-m-b-15">
+                        <div class="pd-detail__inline">
+
+                            <span class="pd-detail__stock">
+                                <i style="margin-left: 2px" class="fas fa-user-graduate"></i>
+                                @Model.CourseViewModel.CountStudent Học Viên
+                            </span>
+                        </div>
+                    </div>
+                    <div class="u-s-m-b-15">
+                        <span class="pd-detail__preview-desc">
+                            @Model.CourseViewModel.Description
+                        </span>
+                    </div>
+                    <div class="u-s-m-b-15">
+                        <form class="pd-detail__form">
+                            <div class="pd-detail-inline-2">
+                                <div class="u-s-m-b-15">
+                                    @if (checkActiveCourse)
+                                    {
+                                        <button class="btn btn--e-brand-b-2" onclick="location.href='/lessons-with-courses-@(Model.CourseViewModel.Id).html'" type="button">Bài học</button>
+                                    }
+                                    else
+                                    {
+                                        if (Model.CourseViewModel.Status == 1)
+                                        {
+                                            <button class="btn btn--e-brand-b-2 add-product-in-cart" data-modal="modal" data-modal-id="#add-to-cart" data-status="@Model.CourseViewModel.Status" data-id="@Model.CourseViewModel.Id" type="button">Thêm vào giỏ</button>
+                                        }
+                                        else if(Model.CourseViewModel.Status == 2)
+                                        {
+                                            <button class="btn btn--e-brand-b-2 add-product-in-cart" data-modal="modal" data-modal-id="#add-to-cart" data-status="@Model.CourseViewModel.Status" data-id="@Model.CourseViewModel.Id" type="button">Chưa phát hành</button>
+
+                                        }
+                                        else
+                                        {
+                                            <button class="btn btn--e-brand-b-2 add-product-in-cart" data-modal="modal" data-modal-id="#add-to-cart" data-status="@Model.CourseViewModel.Status" data-id="@Model.CourseViewModel.Id" type="button">Ngừng kinh doanh</button>
+
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!--====== End - Product Right Side Details ======-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--====== Product Detail Tab ======-->
+<div class="u-s-p-b-30">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="pd-tab">
+                    <div class="u-s-m-b-30">
+                        <ul class="nav pd-tab__list">
+                            <li class="nav-item">
+
+                                <a class="nav-link active" data-toggle="tab" href="#pd-desc">Nội Dung</a>
+                            </li>
+                            <li class="nav-item">
+
+                                <a class="nav-link" data-toggle="tab" href="#pd-gv">Giảng Viên</a>
+                            </li>
+                            <li class="nav-item">
+
+                                <a class="nav-link" data-toggle="tab" href="#pd-lesson">Bài Học</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="view-review" data-toggle="tab" href="#pd-rev">
+                                    Bình Luận
+                                    <span id="span-count-comments">(@Model.CommentViewModels.Count)</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+
+                        <!--====== Tab 1 ======-->
+                        <div class="tab-pane fade show active" id="pd-desc">
+                            <div class="pd-tab__desc">
+                                @Html.Raw(@Model.CourseViewModel.Content)
+                            </div>
+                        </div>
+                        <!--====== End - Tab 1 ======-->
+                        <!--====== Tab 2 ======-->
+                        <div class="tab-pane" id="pd-gv">
+                            <div class="pd-tab__tag">
+                                <div class="u-s-m-b-15">
+                                    <!-- <form> -->
+                                    <div class="row" id="">
+                                        <div class="col-12">
+                                            <div class="m-order__get">
+                                                <div class="manage-o__description u-s-m-b-30">
+                                                    <div class="description__container">
+                                                        <div class="description__img-wrap">
+
+                                                            <img class="u-img-fluid" src="@imageUser" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <div class="manage-o__text-2 u-c-silver" style="margin-left: 12px;">Giảng Viên</div>
+                                                            <div class="description-title" style="font-size: 20px;">@Model.UserViewModel.Name</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="description__info-wrap" style="display: flex;">
+                                                        <div style="margin-right: 20px">
+
+                                                            <span class="manage-o__text-2 u-c-silver">
+                                                                Khóa Học:
+                                                            </span>
+                                                            <span class="manage-o__badge badge--processing">@Model.UserViewModel.CountCourses</span>
+                                                        </div>
+                                                        <div>
+                                                            <span class="manage-o__text-2 u-c-silver">
+                                                                Học Viên:
+                                                                <span class="manage-o__badge badge--shipped">@Model.UserViewModel.CountStudents</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="manage-o__description_content">
+                                                    <div>
+                                                        <div class="manage-o__text-2 u-c-secondary" style="font-size: 20px;">Tiểu Sử: </div>
+                                                        <div class="manage-o__text u-c-silver">@Model.UserViewModel.Biography</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--====== End - Tab 2 ======-->
+                        <!--====== Tab 3 ======-->
+                        <div class="tab-pane" id="pd-lesson">
+                            <div class="pd-tab__rev-f2">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="u-s-m-b-15">Giáo Trình</h2>
+                                    </div>
+                                    <div class="col-5" style="display: flex">
+                                        <div style="flex: 1;">
+                                            <span style="font-size: 20px;font-weight: 600;align-items: center;">
+                                                <i style="font-size: 20px;font-weight: 600;align-items: center;" class="far fa-play-circle"></i>
+                                                Số Bài:
+                                                @Model.LessonViewModels.Count
+                                            </span>
+                                        </div>
+                                        <div style="flex: 1;">
+                                            <span style="font-size: 20px;font-weight: 600;align-items: center;">
+                                                <i style="font-size: 20px;font-weight: 600;align-items: center;" class="far fa-clock"></i>
+                                                Thời Lượng:
+                                                @($@"{TimeSpan.FromSeconds(Model.LessonViewModels.Sum(x => TimeSpan.Parse(x.Times).TotalSeconds)):hh\:mm\:ss}")
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="u-s-m-b-15">
+                                    <table class="rev-f2__table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 80%; font-size: 16px; font-weight: 800">Tiêu Đề</th>
+                                                <th style="font-size: 16px; font-weight: 800">Thời Lượng</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var lesson in Model.LessonViewModels)
+                                            {
+                                                <tr>
+                                                    <td style="text-align: left; width: 80%; padding-left: 12px">
+                                                        <i class="far fa-play-circle"></i>
+                                                        @lesson.Name
+                                                    </td>
+                                                    <td>
+                                                        <i class="far fa-clock"></i>
+                                                        @lesson.Times
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!--====== End - Tab 3 ======-->
+                        <!--====== Tab 4 ======-->
+                        <div class="tab-pane" id="pd-rev">
+                            <div class="pd-tab__rev">
+                                @if (!User.Identity.IsAuthenticated)
+                                {
+                                    <div class="u-s-m-b-30">
+                                        <div class="pd-tab__rev-score">
+                                            <div class="u-s-m-b-8">
+                                                <h2 id="number-comments-non-login">@Model.CommentViewModels.Count Bình Luận</h2>
+                                            </div>
+                                            <div class="u-s-m-b-8">
+                                                <h4><a href="/login.html">Bạn cần đăng nhập để có thể bình luận!</a></h4>
+                                            </div>
+
+                                            <span class="gl-text">Hãy nói cho chúng tôi biết cảm nghĩ của bạn về khóa học này!</span>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="u-s-m-b-60">
+                                        <form class="pd-tab__rev-f2" action="/Courses/AddNewComment" method="post" id="comment-form">
+                                            <input type="hidden" name="entityId" value="@Model.CourseViewModel.Id" />
+                                            <input type="hidden" name="entityType" value="courses" />
+                                            <div class="rev-f2__group">
+                                                <div class="u-s-m-b-10">
+                                                    <textarea class="text-area text-area--primary-style" name="content" placeholder="Bình Luận" id="reviewer-text"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="u-s-m-b-15">
+                                                <button class="btn btn--e-brand-shadow" type="submit">Gửi</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                }
+                                <div class="u-s-m-b-30">
+                                    <form class="pd-tab__rev-f1">
+                                        <div class="rev-f1__group">
+                                            <div class="u-s-m-b-15">
+                                                <h2 id="number-comments">@Model.CommentViewModels.Count Bình Luận</h2>
+                                            </div>
+                                        </div>
+                                        <div class="rev-f1__review" id="comment_list"></div>
+                                        <div class="u-s-m-y-60">
+                                            <button class="btn btn--e-brand-shadow" id="comment-pagination" data-page-index="1" style="display:none" type="button">Xem thêm bình luận</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!--====== End - Tab 4 ======-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--====== End - Product Detail Tab ======-->
+<div class="u-s-p-b-90">
+
+    <!--====== Section Intro ======-->
+    <div class="section__intro u-s-m-b-46">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section__text-wrap">
+                        <h1 class="section__heading u-c-secondary u-s-m-b-12">Khóa học liên quan</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====== End - Section Intro ======-->
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="container">
+            <div class="slider-fouc">
+                <div class="owl-carousel product-slider" data-item="4">
+                    @foreach (var courseViewModel in Model.RelatedCourses)
+                    {
+                        var img = env + courseViewModel.Image;
+                        <div class="u-s-m-b-30">
+                            <div class="product-o product-o--hover-on">
+                                <div class="product-o__wrap">
+
+                                    <a class="aspect aspect--bg-grey aspect--square u-d-block" href="/courses-@(courseViewModel.Id).html">
+                                        <img class="aspect__img" src="@img" alt="">
+                                    </a>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        if (Model.ActiveCoursesViewModels.All(x => x.CourseId != courseViewModel.Id))
+                                        {
+                                            <div class="product-o__action-wrap">
+                                            <ul class="product-o__action-list">
+                                                <li>
+
+                                                    <a class="add-product-in-cart" data-status="@courseViewModel.Status" data-id="@courseViewModel.Id" data-tooltip="tooltip" data-placement="top" title="Thêm vào giỏ"><i class="fas fa-plus-circle"></i></a>
+                                                    @*<a data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip" data-placement="top" title="Add to Cart"><i class="fas fa-plus-circle"></i></a>*@
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="product-o__action-wrap">
+                                            <ul class="product-o__action-list">
+                                                <li>
+                                                    <a class="add-product-in-cart" data-status="@courseViewModel.Status" data-id="@courseViewModel.Id" data-tooltip="tooltip" data-placement="top" title="Thêm vào giỏ"><i class="fas fa-plus-circle"></i></a>
+                                                    @*<a data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip" data-placement="top" title="Add to Cart"><i class="fas fa-plus-circle"></i></a>*@
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    }
+                                </div>
+
+                                <span class="product-o__category">
+
+                                    <a href="/courses.html?categoryId=@courseViewModel.CategoryId">@courseViewModel.CategoryName</a>
+                                </span>
+
+                                <span class="product-o__name">
+
+                                    <a href="/courses-@(courseViewModel.Id).html">@courseViewModel.Name</a>
+                                </span>
+                                <span class="product-o__price">
+                                    @if (courseViewModel.DiscountPercent > 0)
+                                    {
+                                        var promotionPrice = courseViewModel.Price - (courseViewModel.Price * courseViewModel.DiscountPercent / 100);
+                                        @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", @promotionPrice)
+                                        <span class="product-o__discount">
+                                            @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", courseViewModel.Price)
+                                        </span>
+                                    }
+                                    else if (courseViewModel.DiscountAmount > 0)
+                                    {
+                                        @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", courseViewModel.DiscountAmount)
+                                        <span class="product-o__discount">
+                                            @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", courseViewModel.Price)
+                                        </span>
+
+                                    }
+                                    else
+                                    {
+                                        @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", courseViewModel.Price)
+                                    }
+                                </span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====== End - Section Content ======-->
+</div>
+<!--====== End - Section 1 ======-->
+
+<script id="tmpl_children_comments" type="x-tmpl-mustache">
+<div class="review-o u-s-p-t-15 u-s-p-b-30" id="comment-child-{{id}}">
+    <div class="review-o__info u-s-m-b-8"  style="display: flex; justify-content: space-between;">
+        <div style="width: auto; margin-right: 20px; display: grid">
+            <span class="review-o__name">{{ownerUser}}</span>
+            <span class="review-o__date" style="margin-bottom: 10px;margin-top: 10px">{{creationTime}}</span>
+        </div>
+    </div>
+    <p class="review-o__text" style="text-align: justify; align-items: center">{{content}}</p>
+</div>
+</script>
+
+<script id="tmpl_comments" type="x-tmpl-mustache">
+<!-- Parent Comment-->
+<div>
+    <div class="review-o">
+        <div class="review-o__info u-s-m-b-8" style="display: flex; justify-content: space-between;">
+            <div style="width: auto; margin-right: 20px; display: grid">
+                <span class="review-o__name">{{ownerUser}}</span>
+                <span class="review-o__date" style="margin-bottom: 10px;margin-top: 10px">{{creationTime}}</span>
+            </div>
+            <div style="margin-right: 10px">
+                <span class="review-o__name" style="font-size: 16px; margin-right: 10px">
+                   <a class="comment-reply-link" href="#" data-commentid="{{id}}"> <i class="fas fa-reply" style="color: #ff4500;"></i></a>
+                </span>
+            </div>
+        </div>
+        <p class="review-o__text" style="text-align: justify; align-items: center">{{content}}</p>
+    </div>
+      <div id="reply_comment_{{id}}"></div>
+    <!-- Children Comment-->
+    <div style="margin-left: 70px;" id="children_comments_{{id}}">
+     {{{childrenHtml}}}
+    </div>
+    <!-- End Children Comment-->
+</div>
+<!-- End Parent Comment-->
+</script>
+<script id="tmpl_reply_comment" type="x-tmpl-mustache">
+<div class="u-s-m-y-30">
+    <form class="pd-tab__rev-f2" action="/Courses/AddNewComment" method="post" id="frm_reply_comment_{{commentId}}">
+        <input type="hidden" name="entityId" value="@Model.CourseViewModel.Id" />
+        <input type="hidden" name="replyId" value="{{commentId}}" />
+         <input type="hidden" name="entityType" value="courses" />
+        <div class="rev-f2__group">
+            <div class="u-s-m-b-10">
+                <textarea class="text-area text-area--primary-style" name="content" placeholder="Bình Luận" id="txt_reply_content_{{commentId}}"></textarea>
+            </div>
+        </div>
+        <div class="u-s-m-b-15">
+            <button class="btn btn--e-brand-shadow" id="btn_send_reply" type="submit">Trả lời</button>
+        </div>
+    </form>
+</div>
+</script>

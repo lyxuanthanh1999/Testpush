@@ -1,0 +1,114 @@
+<!--Modal add and edit-->
+<div class="modal-body div-scroll">
+    <p-panel #pnl header="Information" [toggleable]="true" [collapsed]="false" styleClass="m-b-10">
+        <div *ngIf="res" class="p-grid-pad p-fluid p-grid-responsive">
+            <div style="align-items: center;" class="p-field p-grid">
+                <div class="p-col-4">
+                    <span class="required">Tên khách hàng:</span>
+                </div>
+                <div class="p-col-8">
+                    <span>{{res.name}}</span>
+                </div>
+            </div>
+            <div style="align-items: center;" class="p-field p-grid">
+                <div class="p-col-4">
+                    <span class="required">Email:</span>
+                </div>
+                <div class="p-col-8">
+                    <span>{{res.email}}</span>
+                </div>
+            </div>
+            <div style="align-items: center;" class="p-field p-grid">
+                <div class="p-col-4">
+                    <span class="required">Số điện thoại:</span>
+                </div>
+                <div class="p-col-8">
+                    <span>{{res.phoneNumber}}</span>
+                </div>
+            </div>
+            <div style="align-items: center;" class="p-field p-grid">
+                <div class="p-col-4">
+                    <span class="required">Địa chỉ:</span>
+                </div>
+                <div class="p-col-8">
+                    <span>{{res.address}}</span>
+                </div>
+            </div>
+            <div style="align-items: center;" class="p-field p-grid">
+                <div class="p-col-4">
+                    <span class="required">Tin nhắn:</span>
+                </div>
+                <div class="p-col-8">
+                    <span>{{res.message}}</span>
+                </div>
+            </div>
+            <div style="align-items: center;" class="p-field p-grid">
+                <div class="p-col-4">
+                    <span class="required">Phương thức thanh toán:</span>
+                </div>
+                <div class="p-col-8">
+                    <span>{{res.paymentMethod | formatOrder: 'paymentMethod'}}</span>
+                </div>
+            </div>
+            <div style="align-items: center;" class="p-field p-grid">
+                <div class="p-col-4">
+                    <span class="required">Tổng cộng:</span>
+                </div>
+                <div class="p-col-8">
+                    <span>{{res.total | currency:'VND':'symbol':'1.0-3' }}</span>
+                </div>
+            </div>
+            <div style="align-items: center;" class="p-field p-grid">
+                <div class="p-col-4">
+                    <span class="required">Trạng thái:</span>
+                </div>
+                <div class="p-col-8">
+                    <span>{{res.status | formatOrder}}</span>
+                </div>
+            </div>
+            <div style="align-items: center;" class="p-field p-grid">
+                <div class="p-col-4">
+                    <span class="required">Ngày tạo:</span>
+                </div>
+                <div class="p-col-8">
+                    <span>{{res.creationTime | date: 'dd/MM/yyyy hh:mm:ss'}}</span>
+                </div>
+            </div>
+            <p-table #dt [value]="res.orderDetails" [metaKeySelection]="true" [responsive]="true">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="p-text-center" [pSortableColumn]="'courseName'">Tên khóa học
+                            <p-sortIcon [field]="'courseName'"></p-sortIcon>
+                        </th>
+                        <th style="width: 20%;" class="p-text-center" [pSortableColumn]="'price'">Giá
+                            <p-sortIcon [field]="'price'"></p-sortIcon>
+                        </th>
+                        <th style="width: 30%;" class="p-text-center" [pSortableColumn]="'promotionPrice'">Giá khuyến mãi
+                            <p-sortIcon [field]="'promotionPrice'"></p-sortIcon>
+                        </th>
+                    </tr>
+
+                </ng-template>
+                <ng-template pTemplate="body" let-row>
+                    <tr [pSelectableRow]="row" [pSelectableRowIndex]="row">
+                        <td class="p-text-center">{{row.courseName}}</td>
+                        <td style="width: 20%;" class="p-text-center">{{row.price | currency:'VND':'symbol':'1.0-3'}}</td>
+                        <td style="width: 30%;" class="p-text-center">{{row.promotionPrice | currency:'VND':'symbol':'1.0-3'}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div style="text-align: left" class="font-weight-bold">
+                        Tổng số bản ghi: {{totalRecords | number}}
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+        <p-blockUI [target]="pnl" [blocked]="blockedPanel">
+            <p-progressSpinner [style]="{width: '100px', height: '100px', position:'absolute',top:'25%',left:'50%'}" strokeWidth="2" animationDuration=".5s"></p-progressSpinner>
+        </p-blockUI>
+    </p-panel>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-info"  appPermission appFunction="Orders" appAction="ExportExcel" (click)="export()">Xuất File</button>
+    <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Đóng</button>
+</div>

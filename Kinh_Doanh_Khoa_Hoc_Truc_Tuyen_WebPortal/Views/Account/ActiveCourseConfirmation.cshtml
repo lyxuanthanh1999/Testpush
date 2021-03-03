@@ -1,0 +1,50 @@
+﻿@model ActiveCourseViewModel
+<!--====== Section 1 ======-->
+<div class="u-s-p-y-30">
+
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="container">
+            <div class="breadcrumb">
+                <div class="breadcrumb__wrap">
+                    <ul class="breadcrumb__list">
+                        <li class="has-separator">
+                            <a href="/">Trang chủ</a>
+                        </li>
+                        <li class="is-marked">
+                            <a href="#">Xác nhận kích hoạt khóa học</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--====== End - Section 1 ======-->
+<!--====== Section 2 ======-->
+<div class="u-s-p-b-30">
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="dash">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-12">
+                        <!--====== Dashboard Features ======-->
+                        @await Component.InvokeAsync("DashboardFeatures", Model.NameDash)
+                        <!--====== End - Dashboard Features ======-->
+                    </div>
+                    <div class="col-lg-9 col-md-12">
+                        <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white">
+                            <div class="dash__pad-2">
+                                <h1 class="dash__h1 u-s-m-b-14" style="align-items: center; text-align: center; font-size: 24px">Chúc mừng bạn đã kích hoạt khóa học thành công</h1>
+                                <span class="dash__text u-s-m-b-30" style="text-align: center; align-items:center"><a href="/active-course.html">Hãy nhấn vào đây để quay về trang kích hoạt khóa học!</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====== End - Section Content ======-->
+</div>
+<!--====== End - Section 2 ======-->

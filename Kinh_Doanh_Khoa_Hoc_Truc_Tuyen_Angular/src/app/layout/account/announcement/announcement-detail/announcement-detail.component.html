@@ -1,0 +1,53 @@
+<!--Modal add and edit-->
+<div class="modal-body div-scroll">
+    <p-panel #pnl header="Information" [toggleable]="true" [collapsed]="false" styleClass="m-b-10">
+        <div *ngIf="res" class="p-grid-pad p-fluid p-grid-responsive">
+            <div style="align-items: center;" class="p-field p-grid">
+                <div class="p-col-3">
+                    <span class="required">Tiêu đề:</span>
+                </div>
+                <div class="p-col-9">
+                    <span>{{res.title}}</span>
+                </div>
+            </div>
+            <div style="align-items: center;" class="p-field p-grid">
+                <div class="p-col-3">
+                    <span class="required">Nội dung:</span>
+                </div>
+                <div class="p-col-9">
+                    <span>{{res.content}}</span>
+                </div>
+            </div>
+            <div style="align-items: center;" class="p-field p-grid">
+                <div class="p-col-3">
+                    <span class="required">Người tạo:</span>
+                </div>
+                <div class="p-col-9">
+                    <span>{{res.userFullName}}</span>
+                </div>
+            </div>            
+            <div style="align-items: center;" class="p-field p-grid">
+                <div class="p-col-3">
+                    <span class="required">Trạng thái:</span>
+                </div>
+                <div class="p-col-9">
+                    <span>{{res.tmpHasRead | formatStatusAnnounce}}</span>
+                </div>
+            </div>
+            <div style="align-items: center;" class="p-field p-grid">
+                <div class="p-col-3">
+                    <span class="required">Ngày tạo:</span>
+                </div>
+                <div class="p-col-9">
+                    <span>{{res.creationTime | date: 'dd/MM/yyyy hh:mm:ss'}}</span>
+                </div>
+            </div>
+        </div>
+        <p-blockUI [target]="pnl" [blocked]="blockedPanel">
+            <p-progressSpinner [style]="{width: '100px', height: '100px', position:'absolute',top:'25%',left:'50%'}" strokeWidth="2" animationDuration=".5s"></p-progressSpinner>
+        </p-blockUI>
+    </p-panel>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Đóng</button>
+</div>

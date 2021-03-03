@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Domain", "Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Domain\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Domain.csproj", "{A664C0FA-FCE9-4276-B1D0-E90C978F95EC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Infrastructure", "Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Infrastructure\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Infrastructure.csproj", "{A5E67A3F-FDB6-45D0-A565-C980ED789F5C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Api", "Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Api\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Api.csproj", "{0AA6C605-7531-4050-8614-4F3E0055918A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_WebPortal", "Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_WebPortal\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_WebPortal.csproj", "{DFCCB5A4-8F72-4A82-8955-BD9FFB1E7794}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8654A736-1D67-4600-BD6F-CF6041D1080D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A664C0FA-FCE9-4276-B1D0-E90C978F95EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A664C0FA-FCE9-4276-B1D0-E90C978F95EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A664C0FA-FCE9-4276-B1D0-E90C978F95EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A664C0FA-FCE9-4276-B1D0-E90C978F95EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5E67A3F-FDB6-45D0-A565-C980ED789F5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5E67A3F-FDB6-45D0-A565-C980ED789F5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5E67A3F-FDB6-45D0-A565-C980ED789F5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5E67A3F-FDB6-45D0-A565-C980ED789F5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AA6C605-7531-4050-8614-4F3E0055918A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AA6C605-7531-4050-8614-4F3E0055918A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AA6C605-7531-4050-8614-4F3E0055918A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AA6C605-7531-4050-8614-4F3E0055918A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFCCB5A4-8F72-4A82-8955-BD9FFB1E7794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFCCB5A4-8F72-4A82-8955-BD9FFB1E7794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFCCB5A4-8F72-4A82-8955-BD9FFB1E7794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFCCB5A4-8F72-4A82-8955-BD9FFB1E7794}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A664C0FA-FCE9-4276-B1D0-E90C978F95EC} = {8654A736-1D67-4600-BD6F-CF6041D1080D}
+		{A5E67A3F-FDB6-45D0-A565-C980ED789F5C} = {8654A736-1D67-4600-BD6F-CF6041D1080D}
+		{0AA6C605-7531-4050-8614-4F3E0055918A} = {8654A736-1D67-4600-BD6F-CF6041D1080D}
+		{DFCCB5A4-8F72-4A82-8955-BD9FFB1E7794} = {8654A736-1D67-4600-BD6F-CF6041D1080D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CFA80453-F38E-4B14-8166-EEC6ECE620EF}
+	EndGlobalSection
+EndGlobal

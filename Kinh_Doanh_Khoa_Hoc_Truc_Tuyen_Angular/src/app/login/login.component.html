@@ -1,0 +1,33 @@
+<div class="login-page">
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">
+            <img class="user-avatar" src="assets/images/logo.png" width="150px" />
+            <h1>Administration</h1>
+            <form role="form" [formGroup]="loginForm" (ngSubmit)="login()">
+                <div class="form-content">
+                    <div class="form-group">
+                        <input [ngClass]="{ 'is-invalid': submitted && f.username.errors }" [placeholder]="'Tên đăng nhập'" formControlName="username" class="form-control input-underline input-lg" type="text" />
+                        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                            <div *ngIf="f.username.errors.required">Yêu cầu nhập tên đăng nhập</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input [ngClass]="{ 'is-invalid': submitted && f.password.errors }" [placeholder]="'Mật khẩu'" formControlName="password" class="form-control input-underline input-lg" type="password" />
+                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                            <div *ngIf="f.password.errors.required">Yêu cầu nhập mật khẩu</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        <button [disabled]="loading" class="btn rounded-btn mb-2">
+                          Login
+                        </button>
+                        <div>
+                            <p-message *ngIf="error" severity="error" text="{{error}}"></p-message>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,122 @@
+<div class="animated fadeIn">
+    <p-panel #pnl>
+        <p-header style="width: 100%">
+            <div class="p-grid">
+                <div class="p-col-12">
+                    <h3>Doanh thu</h3>
+                </div>
+                <div class="p-col-12">
+                    <span appPermission appFunction="Revenue" appAction="View" class="p-mr-2 p-text-bold">Chọn Kiểu Lọc:</span>
+                    <p-dropdown appPermission appFunction="Revenue" appAction="View" class="p-mr-2" [options]="chooseType" (onChange)="onChangeType()" [style]="{'width':'150px'}" [(ngModel)]="isChooseType">
+                    </p-dropdown>
+                    <!-- Pham Vi -->
+                    <span *ngIf="isChooseType === 3" appPermission appFunction="Revenue" appAction="View" class="p-mr-2 p-text-bold">From:</span>
+                    <p-calendar *ngIf="isChooseType === 3" appPermission appFunction="Revenue" appAction="View" class="p-mr-2" appendTo="body" [(ngModel)]="fromDate" dateFormat="dd/mm/yy" [showIcon]="true" [locale]="vi" [monthNavigator]="true" [yearNavigator]="true" (onSelect)="checkChanged()"
+                        yearRange="1900:2030" showButtonBar="true">
+                    </p-calendar>
+                    <span *ngIf="isChooseType === 3" appPermission appFunction="Revenue" appAction="View" class="p-mr-2 p-text-bold">To: </span>
+                    <p-calendar *ngIf="isChooseType === 3" appPermission appFunction="Revenue" appAction="View" class="p-mr-2" appendTo="body" [(ngModel)]="toDate" dateFormat="dd/mm/yy" [showIcon]="true" [locale]="vi" [monthNavigator]="true" [yearNavigator]="true" (onSelect)="checkChanged()"
+                        yearRange="1900:2030" showButtonBar="true">
+                    </p-calendar>
+                    <!-- Pham Vi -->
+                    <p-dropdown appPermission appFunction="Revenue" appAction="View" *ngIf="(isChooseType === 3 && fromDate && toDate) || isChooseType === 2 ||  isChooseType === 1" class="p-mr-2" [options]="chooseChart" (onChange)="onChangeChart()" [style]="{'width':'150px'}"
+                        [(ngModel)]="isChangeChart">
+                    </p-dropdown>
+                    <button appPermission appFunction="Revenue" appAction="View" *ngIf="isChange" pButton type="button" label="Load" icon="fa fa-eercast" class="p-mr-2 p-button-success" (click)="loadRevenueDaily()"></button>
+                    <p-checkbox appPermission appFunction="Revenue" appAction="View" *ngIf="(isChooseType === 3 && fromDate && toDate) || isChooseType === 2 ||  isChooseType === 1" class="p-mr-2 p-mt-1 p-text-bold p-text-center" [ngStyle]="{'height': '39.73px'}" [(ngModel)]="showDetails"
+                        label="Xem Chi Tiết" (click)="showHideDetailsTable()" binary="true">
+                    </p-checkbox>
+
+
+                </div>
+            </div>
+        </p-header>
+
+        <p-table #dt [value]="items" [metaKeySelection]="true" [responsive]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="p-text-center" [pSortableColumn]="'date'">Ngày
+                        <p-sortIcon [field]="'date'"></p-sortIcon>
+                    </th>
+                    <th class="p-text-center" [pSortableColumn]="'revenue'">Doanh thu
+                        <p-sortIcon [field]="'revenue'"></p-sortIcon>
+                    </th>
+                    <th class="p-text-center" [pSortableColumn]="'profit'">Lợi nhuận
+                        <p-sortIcon [field]="'profit'"></p-sortIcon>
+                    </th>
+                </tr>
+
+            </ng-template>
+            <ng-template pTemplate="body" let-row>
+                <tr [pSelectableRow]="row" [pSelectableRowIndex]="row">
+                    <td class="p-text-center">{{row.date | date: 'dd/MM/yyyy'}}</td>
+                    <td class="p-text-center">{{row.revenue}}</td>
+                    <td class="p-text-center">{{row.profit}}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                <div style="text-align: left" class="font-weight-bold p-text-bold">
+                    Tổng số bản ghi: {{totalRecords | number}}
+                </div>
+            </ng-template>
+        </p-table>
+        <p-footer>
+            <p-blockUI [target]="pnl" [blocked]="blockedPanel">
+                <p-progressSpinner [style]="{width: '100px', height: '100px', position: 'absolute',top: '25%',left: '50%'}" strokeWidth="2" animationDuration=".5s"></p-progressSpinner>
+            </p-blockUI>
+        </p-footer>
+    </p-panel>
+
+    <p-panel #pnlDetail *ngIf="showDetails">
+        <p-table #dt2 [value]="details" [metaKeySelection]="true" [responsive]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="p-text-center" [pSortableColumn]="'date'">Ngày
+                        <p-sortIcon [field]="'date'"></p-sortIcon>
+                    </th>
+                    <th class="p-text-center" [pSortableColumn]="'name'">Tên khách hàng
+                        <p-sortIcon [field]="'name'"></p-sortIcon>
+                    </th>
+                    <th class="p-text-center" [pSortableColumn]="'email'">email
+                        <p-sortIcon [field]="'email'"></p-sortIcon>
+                    </th>
+                    <th class="p-text-center" [pSortableColumn]="'countProducts'">Số lượng khóa học
+                        <p-sortIcon [field]="'countProducts'"></p-sortIcon>
+                    </th>
+                    <th class="p-text-center" [pSortableColumn]="'revenue'">Doanh thu
+                        <p-sortIcon [field]="'revenue'"></p-sortIcon>
+                    </th>
+                    <th class="p-text-center" [pSortableColumn]="'profit'">Lợi nhuận
+                        <p-sortIcon [field]="'profit'"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-row>
+                <tr [pSelectableRow]="row" [pSelectableRowIndex]="row">
+                    <td class="p-text-center">{{row.date | date: 'dd/MM/yyyy'}}</td>
+                    <td class="p-text-center">{{row.name | formatData: 30}}</td>
+                    <td class="p-text-center">{{row.email | formatData: 20}}</td>
+                    <td class="p-text-center">{{row.countProducts}}</td>
+                    <td class="p-text-center">{{row.revenue | currency:'VND':'symbol':'1.0-3'}}</td>
+                    <td class="p-text-center">{{row.profit | currency:'VND':'symbol':'1.0-3'}}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                <div style="text-align: left" class="font-weight-bold p-text-bold">
+                    Tổng số khóa học: {{totalDetailsRecords}}
+                </div>
+            </ng-template>
+        </p-table>
+        <p-blockUI [target]="pnlDetail" [blocked]="blockedPanelDetails">
+            <p-progressSpinner [style]="{width: '100px', height: '100px', position:'absolute',top:'25%',left:'50%'}" strokeWidth="2" animationDuration=".5s"></p-progressSpinner>
+        </p-blockUI>
+    </p-panel>
+
+    <p-panel #pnlChart *ngIf="items">
+        <p-chart *ngIf="this.isChangeChart === false" type="line" [data]="data"></p-chart>
+        <p-chart *ngIf="this.isChangeChart === true" type="bar" [data]="data"></p-chart>
+        <p-blockUI [target]="pnlChart" [blocked]="blockedPanelChart">
+            <p-progressSpinner [style]="{width: '100px', height: '100px', position:'absolute',top:'25%',left:'50%'}" strokeWidth="2" animationDuration=".5s"></p-progressSpinner>
+        </p-blockUI>
+    </p-panel>
+</div>

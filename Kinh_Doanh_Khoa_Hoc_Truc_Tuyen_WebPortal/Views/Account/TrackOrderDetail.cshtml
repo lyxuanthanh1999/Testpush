@@ -1,0 +1,442 @@
+﻿@using System.Globalization
+@using Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Domain.Enums
+@using Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_WebPortal.Extensions
+@model TrackOrderDetailViewModel
+<!--====== Section 1 ======-->
+<div class="u-s-p-y-30">
+
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="container">
+            <div class="breadcrumb">
+                <div class="breadcrumb__wrap">
+                    <ul class="breadcrumb__list">
+                        <li class="has-separator">
+                            <a href="/">Trang chủ</a>
+                        </li>
+                        <li class="has-separator">
+                            <a href="/manage-orders.html">Đơn hàng</a>
+                        </li>
+                        <li class="is-marked">
+                            <a href="#">Theo dõi đơn hàng</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--====== End - Section 1 ======-->
+<!--====== Section 2 ======-->
+<div class="u-s-p-b-30">
+
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="dash">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-12">
+
+                        <!--====== Dashboard Features ======-->
+                        @await Component.InvokeAsync("DashboardFeatures", Model.NameDash)
+                        <!--====== End - Dashboard Features ======-->
+                    </div>
+                    <div class="col-lg-9 col-md-12">
+                        <h1 class="dash__h1 u-s-m-b-30">Order Details</h1>
+                        <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30">
+                            <div class="dash__pad-2">
+                                <div class="dash-l-r">
+                                    <div>
+                                        <div class="manage-o__text-2 u-c-secondary">Mã đơn hàng #@Model.OrderViewModel.Id</div>
+                                        <div class="manage-o__text u-c-silver">Ngày Tạo: @Model.OrderViewModel.CreationTime</div>
+                                    </div>
+                                    <div>
+                                        <div class="manage-o__text-2 u-c-silver">
+                                            Tổng cộng:
+                                            <span class="manage-o__text-2 u-c-secondary">
+                                                @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", @Model.OrderViewModel.Total)
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30">
+                            <div class="dash__pad-2">
+                                <div class="manage-o">
+                                    <div class="manage-o__header u-s-m-b-30">
+                                        <div class="manage-o__icon">
+                                            <i class="fas fa-box u-s-m-r-5"></i>
+                                            <span class="manage-o__text">Chi Tiết Đơn</span>
+                                        </div>
+                                    </div>
+                                    <div class="dash-l-r">
+                                        @if (@Model.OrderViewModel.Status == OrderStatus.New)
+                                        {
+                                            <div class="manage-o__text u-c-secondary">Đơn chưa được xác nhận</div>
+                                        }
+                                        else
+                                        {
+                                            <div class="manage-o__text u-c-secondary">Đơn được xác nhận: @Model.OrderViewModel.LastModificationTime</div>
+                                        }
+                                        <div class="manage-o__icon">
+                                            @if (Model.OrderViewModel.Status == OrderStatus.New)
+                                            {
+                                                <i class="fas fa-truck u-s-m-r-5"></i>
+                                                <span class="manage-o__text">New Order</span>
+                                            }
+                                            else if (Model.OrderViewModel.Status == OrderStatus.InProgress)
+                                            {
+                                                <i class="fas fa-shipping-fast u-s-m-r-5"></i>
+                                                <span class="manage-o__text">In Progress</span>
+                                            }
+                                            else if (Model.OrderViewModel.Status == OrderStatus.Cancelled)
+                                            {
+                                                <i class="fas fa-window-close u-s-m-r-5"></i>
+                                                <span class="manage-o__text">Cancelled</span>
+                                            }
+                                            else if (Model.OrderViewModel.Status == OrderStatus.Returned)
+                                            {
+                                                <i class="fas fa-redo-alt u-s-m-r-5"></i>
+                                                <span class="manage-o__text">Returned</span>
+                                            }
+                                            else
+                                            {
+                                                <i class="fas fa-check-circle u-s-m-r-5"></i>
+                                                <span class="manage-o__text">Completed</span>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="manage-o__timeline">
+                                        <div class="timeline-row">
+                                            @if (Model.OrderViewModel.PaymentMethod == PaymentMethod.PaymentGateway)
+                                            {
+                                                if (Model.OrderViewModel.Status == OrderStatus.Returned || Model.OrderViewModel.Status == OrderStatus.Cancelled)
+                                                {
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Đơn mới</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Đăng xử lý</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Hủy đơn</span>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Đơn mới</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Đang xử lý</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Hoàn thành</span>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (Model.OrderViewModel.Status == OrderStatus.Cancelled)
+                                                {
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Đơn mới</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Đang xử lý</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Hủy đơn</span>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else if (Model.OrderViewModel.Status == OrderStatus.Returned)
+                                                {
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Đơn mới</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Đang xử lý</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Trả hàng</span>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else if (Model.OrderViewModel.Status == OrderStatus.New)
+                                                {
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Đơn mới</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Đang xử lý</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Hoàn thành</span>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else if (Model.OrderViewModel.Status == OrderStatus.InProgress)
+                                                {
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Đơn mới</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Đang xử lý</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Hoàn thành</span>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Đơn mới</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Đang xử lý</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 u-s-m-b-30">
+                                                        <div class="timeline-step">
+                                                            <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                <span class="timeline-circle"></span>
+                                                            </div>
+
+                                                            <span class="timeline-text">Hoàn thành</span>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                @foreach (var orderDetailViewModel in Model.OrderViewModel.OrderDetails)
+                                {
+                                    var env = "https://localhost:44342";
+                                    var imgDetail = env + orderDetailViewModel.CourseImage;
+                                    <div class="manage-o__description" style="margin-bottom: 20px">
+                                        <div class="description__container">
+                                            <div class="description__img-wrap">
+                                                <img class="u-img-fluid" style="min-height: 90px;background-repeat: no-repeat;background-position: center;background-size: cover;" src="@imgDetail" alt="">
+                                            </div>
+                                            <div class="description-title">@orderDetailViewModel.CourseName</div>
+                                        </div>
+                                        <div class="description__info-wrap">
+                                            <div>
+
+                                                <span class="manage-o__text-2 u-c-silver">
+                                                    Price:
+                                                    @if (orderDetailViewModel.PromotionPrice != null)
+                                                    {
+                                                        <span class="manage-o__text-2 u-c-secondary">
+                                                            @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", orderDetailViewModel.PromotionPrice)
+                                                        </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="manage-o__text-2 u-c-secondary">
+                                                            @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", orderDetailViewModel.Price)
+                                                        </span>
+                                                    }
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                @if (Model.OrderViewModel.PaymentMethod == PaymentMethod.CashOnDelivery)
+                                {
+
+                                    <div class="dash__box dash__box--bg-white dash__box--shadow u-h-100">
+                                        <div class="dash__pad-3">
+                                            <h2 class="dash__h2 u-s-m-b-8">Thông tin đơn hàng</h2>
+                                            <h2 class="dash__h2 u-s-m-b-8">@Model.OrderViewModel.Name</h2>
+                                            <span class="dash__text-2">Email: @Model.OrderViewModel.Email</span>
+                                            <span class="dash__text-2">Số điện thoại: @Model.OrderViewModel.PhoneNumber</span>
+                                            <span class="dash__text-2">Địa chỉ: @Model.OrderViewModel.Address</span>
+                                            <span class="dash__text-2">Tin nhắn: @Model.OrderViewModel.Message</span>
+                                            <h2 class="dash__h2 u-s-m-y-8">Tổng Cộng</h2>
+                                            <div class="dash-l-r u-s-m-b-8">
+                                                <div class="manage-o__text-2 u-c-secondary">Tổng Cộng</div>
+                                                <div class="manage-o__text-2 u-c-secondary">
+                                                    @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", Model.OrderViewModel.Total)
+                                                </div>
+                                            </div>
+                                            <span class="dash__text-2">Thanh Toán: Thanh toán khi nhận hàng</span>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="dash__box dash__box--bg-white dash__box--shadow u-h-100">
+                                        <div class="dash__pad-3">
+                                            <h2 class="dash__h2 u-s-m-b-8">Thông tin đơn hàng</h2>
+                                            <h2 class="dash__h2 u-s-m-b-8">@Model.OrderViewModel.Name</h2>
+                                            <span class="dash__text-2">Địa chỉ: @Model.OrderViewModel.Address</span>
+                                            <span class="dash__text-2">Số điện thoại: @Model.OrderViewModel.PhoneNumber</span>
+                                            <span class="dash__text-2">Email: @Model.OrderViewModel.Email</span>
+                                            <span class="dash__text-2">Tin nhắn: @Model.OrderViewModel.Message</span>
+                                            <h2 class="dash__h2 u-s-m-y-8">Tổng Cộng</h2>
+                                            <div class="dash-l-r u-s-m-b-8">
+                                                <div class="manage-o__text-2 u-c-secondary">Tổng Cộng</div>
+                                                <div class="manage-o__text-2 u-c-secondary">
+                                                    @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", Model.OrderViewModel.Total)
+                                                </div>
+                                            </div>
+                                            <span class="dash__text-2">Thanh Toán: Thanh toán trực tuyến</span>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====== End - Section Content ======-->
+</div>
+<!--====== End - Section 2 ======-->

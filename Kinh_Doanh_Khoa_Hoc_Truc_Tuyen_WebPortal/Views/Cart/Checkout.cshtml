@@ -1,0 +1,219 @@
+﻿@using System.Globalization
+@using Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_WebPortal.Extensions
+@model List<CartViewModel>
+@{
+    var env = "https://localhost:44342";
+    var user = User.GetUserId();
+}
+@section CssLinks{
+    <link rel="stylesheet" href="https://pay.vnpay.vn/lib/vnpay/vnpay.css">
+}
+@section Scripts{
+    <script type="text/javascript" src="https://pay.vnpay.vn/lib/vnpay/vnpay.min.js" asp-append-version="true"></script>
+    <script src="~/assets/js/custom/customCheckout.min.js" asp-append-version="true"></script>
+    <script>
+        var checkout = new CheckoutAjax();
+        checkout.initialize();
+    </script>
+}
+<input type="hidden" id="hid_current_login_id" value="@user" />
+<!--====== Section 1 ======-->
+<div class="u-s-p-y-30">
+
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="container">
+            <div class="breadcrumb">
+                <div class="breadcrumb__wrap">
+                    <ul class="breadcrumb__list">
+                        <li class="has-separator">
+
+                            <a href="/">Trang chủ</a>
+                        </li>
+                        <li class="is-marked">
+
+                            <a href="#">Thanh toán</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--====== End - Section 1 ======-->
+@if (Model.Count > 0)
+{
+    <!--====== Section 3 ======-->
+    <div class="u-s-p-b-30">
+        <!--====== Section Content ======-->
+        <div class="section__content">
+            <div class="container">
+                <div class="checkout-f">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="checkout-f__h1">Thông tin đơn hàng</h1>
+                            <!--====== Order Summary ======-->
+                            <div class="o-summary">
+                                <div class="o-summary__section u-s-m-b-30">
+                                    <div class="o-summary__item-wrap gl-scroll">
+                                        @foreach (var cartViewModel in Model)
+                                        {
+                                            var img = env + cartViewModel.CourseViewModel.Image;
+                                            <div class="o-card">
+                                                <div class="o-card__flex">
+                                                    <div class="o-card__img-wrap">
+
+                                                        <img class="u-img-fluid" style="height: 100%" src="@img" alt="">
+                                                    </div>
+                                                    <div class="o-card__info-wrap">
+
+                                                        <span class="o-card__name">
+
+                                                            <a href="/courses-@(cartViewModel.CourseViewModel.Id).html">@cartViewModel.CourseViewModel.Name</a>
+                                                        </span>
+
+                                                        @if (cartViewModel.PromotionPrice == null)
+                                                        {
+                                                            <span class="o-card__price">@string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", cartViewModel.Price)</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <del class="o-card__quantity">@string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", cartViewModel.Price)</del>
+                                                            <span class="o-card__price">@string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", cartViewModel.PromotionPrice)</span>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="o-summary__box" style="border-top: 1px solid #f5f5f5;">
+                                        <table class="o-summary__table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Tổng cộng</td>
+                                                    <td>@string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", Model.Sum(x => x.PromotionPrice ?? x.Price))</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="o-summary__section u-s-m-b-30">
+                                    <div class="o-summary__box">
+                                        <h1 class="checkout-f__h1">Phương thức thanh toán</h1>
+                                        <div class="checkout-f__payment">
+                                            <div class="u-s-m-b-10">
+
+                                                <!--====== Radio Box ======-->
+                                                <div class="radio-box">
+
+                                                    <input type="radio" id="payment-gateway" checked name="payment">
+                                                    <div class="radio-box__state radio-box__state--primary">
+
+                                                        <label class="radio-box__label" for="payment-gateway">Thanh toán trực tuyến</label>
+                                                    </div>
+                                                </div>
+                                                <!--====== End - Radio Box ======-->
+                                            </div>
+                                            <div class="u-s-m-b-20">
+
+                                                <!--====== Radio Box ======-->
+                                                <div class="radio-box">
+
+                                                    <input type="radio" id="cash-on-delivery" name="payment">
+                                                    <div class="radio-box__state radio-box__state--primary">
+
+                                                        <label class="radio-box__label" for="cash-on-delivery">Thanh toán khi nhận hàng</label>
+                                                    </div>
+                                                </div>
+                                                <div class="u-s-m-y-20" style="background-color: #ffffff;border: 1px solid #eee;padding: 20px" id="check-payment-info">
+                                                    <h1 class="checkout-f__h1">Thông tin giao hàng</h1>
+                                                    <div class="checkout-f__delivery">
+                                                        <div class="u-s-m-b-30">
+                                                            <!--====== Full Name ======-->
+                                                            <div class="u-s-m-b-15">
+
+                                                                <label class="gl-label" for="billing-name">Họ và tên *</label>
+
+                                                                <input class="u-s-m-b-15 input-text input-text--primary-style" type="text" id="billing-name" placeholder="Nhập họ và tên">
+                                                                <span id="billing-name-message" style="display:none;color: red;">Nhập họ và tên</span>
+                                                            </div>
+                                                            <div class="u-s-m-b-15">
+
+                                                                <label class="gl-label" for="billing-phone">Số điện thoại *</label>
+
+                                                                <input class="u-s-m-b-15 input-text input-text--primary-style" type="text" id="billing-phone" placeholder="Số điện thoại">
+                                                                <span id="billing-phone-message" style="display:none;color: red;">Nhập số điện thoại</span>
+                                                            </div>
+                                                            <div class="u-s-m-b-15">
+
+                                                                <label class="gl-label" for="billing-email">Email *</label>
+
+                                                                <input class="u-s-m-b-15 input-text input-text--primary-style" type="text" id="billing-email" placeholder="Số email">
+                                                                <span id="billing-email-message" style="display:none;color: red;">Nhập email</span>
+                                                            </div>
+                                                            <!--====== End - First Name, Last Name ======-->
+                                                            <!--====== Street Address ======-->
+                                                            <div class="u-s-m-b-15">
+
+                                                                <label class="gl-label" for="billing-street">Địa chỉ *</label>
+
+                                                                <input class="u-s-m-b-15 input-text input-text--primary-style" type="text" id="billing-street" placeholder="Địa chỉ">
+                                                                <span id="billing-address-message" style="display:none;color: red;">Nhập địa chỉ</span>
+                                                            </div>
+                                                            <!--====== End - Street Address ======-->
+
+                                                            <div class="u-s-m-b-10">
+
+                                                                <label class="gl-label" for="order-note">Tin nhắn</label>
+                                                                <textarea class="u-s-m-b-15 text-area text-area--primary-style" id="order-note" placeholder="Tin nhắn (Nếu có)"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+
+                                                <button class="btn btn--e-brand-b-2" id="btnCheckout" type="button">Đặt hàng</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--====== End - Order Summary ======-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--====== End - Section Content ======-->
+    </div>
+    <!--====== End - Section 3 ======-->
+}
+else
+{
+    <!--====== Section 1 ======-->
+    <div class="u-s-p-y-30">
+
+        <!--====== Section Content ======-->
+        <div class="section__content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 u-s-m-b-30">
+                        <div class="empty">
+                            <div class="empty__wrap">
+
+                                <span class="empty__big-text">Rỗng</span>
+
+                                <span class="empty__text-1">Không Tìm Thấy Sản Phẩm Để Thanh Toán.</span>
+
+                                <a class="empty__redirect-link btn--e-brand" href="/courses.html">Tiếp tục mua sắm</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--====== End - Section Content ======-->
+    </div>
+    <!--====== End - Section 1 ======-->
+}

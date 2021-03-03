@@ -1,0 +1,621 @@
+﻿@using Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_WebPortal.Extensions
+@model List<CategoryViewModel>
+<header class="header--style-1">
+<input type="hidden" id="hid_check_auth" value="@User.Identity.IsAuthenticated" />
+    <!--====== Nav 1 ======-->
+    <nav class="primary-nav primary-nav-wrapper--border">
+        <div class="container">
+
+            <!--====== Primary Nav ======-->
+            <div class="primary-nav">
+
+                <!--====== Main Logo ======-->
+                <a class="main-logo" href="/">
+
+                    <img src="~/assets/images/logo/logo-1.png" alt="">
+                </a>
+                <!--====== End - Main Logo ======-->
+                <!--====== Search Form ======-->
+                <form action="/courses.html" method="get" class="main-form">
+
+                    <label for="main-search"></label>
+
+                    <input class="input-text input-text--border-radius input-text--style-1" type="text" name="filter" id="main-search" placeholder="Search">
+
+                    <button class="btn btn--icon fas fa-search main-search-button" style="width:auto" type="submit"></button>
+                </form>
+                <!--====== End - Search Form ======-->
+                <!--====== Dropdown Main plugin ======-->
+                <div class="menu-init" id="navigation">
+
+                    <button class="btn btn--icon toggle-button toggle-button--secondary fas fa-cogs" type="button"></button>
+
+                    <!--====== Menu ======-->
+                    <div class="ah-lg-mode">
+
+                        <span class="ah-close">✕ Đóng</span>
+
+                        <!--====== List ======-->
+                        <ul class="ah-list ah-list--design1 ah-list--link-color-secondary">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="has-dropdown" data-tooltip="tooltip" data-placement="left" title="Thông báo">
+                                    <input hidden id="accessToken" type="text" value="@User.GetToken()" />
+                                    <a>
+                                        <i class="far fa-bell"></i>
+                                        <span id="totalAnnouncement" class="total-item-round" style="top: 20px">0</span>
+                                    </a>
+
+                                    <!--====== Dropdown ======-->
+
+                                    <span class="js-menu-toggle"></span>
+                                    <ul id="announcementList" style="width: 500px;right: 55px;padding: 0; margin: 0">
+                                    </ul>
+                                    <!--====== End - Dropdown ======-->
+                                    <script id="announcement-template" type="x-tmpl-mustache">
+                                        <li style="border-bottom: 1px solid #f7f7f7">
+                                            <a class="checkRead" style="display:inline-flex;align-items: center;" data-id="{{Id}}" href="#">
+                                                <div class="description__img-wrap">
+                                                    <img class="u-img-fluid" style="width: auto;height: 100%;" src="{{Image}}" alt="">
+                                                </div>
+                                                <div class="description-title" style="display: grid; white-space: initial; text-align: justify;font-size: 16px;font-weight: 600">
+                                                    {{Title}}
+                                                    <span class="manage-o__text-2 u-c-silver" style="line-height: 1.9; text-align: justify;font-size: 12px;font-weight: 600">
+                                                        {{CreationTime}}
+                                                    </span>
+                                                    <span class="manage-o__text-2 u-c-silver" style="line-height: 1.3; text-align: justify">
+                                                      {{Content}}
+                                                    </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </script>
+                                    <script id="announcement-tag-template" type="x-tmpl-mustache">
+                                         <li style="text-align:center;align-items: center;">
+                                            <a href="/my-announcements.html">
+                                                <span class="description-title" style="text-align:center;align-items: center; line-height: 1.9; text-align: justify; font-size: 12px; font-weight: 600">
+                                                    Xem Tất Cả
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </script>
+                                </li>
+                                <li class="has-dropdown" data-tooltip="tooltip" data-placement="left" title="@User.Identity.Name">
+
+                                    <a>
+                                        <i class="far fa-user-circle"></i>
+                                    </a>
+
+                                    <!--====== Dropdown ======-->
+
+                                    <span class="js-menu-toggle"></span>
+                                    <ul style="width: auto">
+                                        <li>
+
+                                            <a href="/my-profile.html">
+                                                <i class="fas fa-user-circle u-s-m-r-6"></i>
+
+                                                <span>Thông tin tài khoản</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <form style="display: block;padding: 8px 20px;color: #333333;font-size: 12px;font-weight: 600;background-color: white;" method="post" asp-controller="Account" asp-action="Logout">
+                                                <button style="background-color: white;margin: 0;padding: 0;border: 0;font-weight: 600;" type="submit">
+                                                    <i class="fas fa-lock-open u-s-m-r-6"></i>
+                                                    Đăng xuất
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                    <!--====== End - Dropdown ======-->
+                                </li>
+                            }
+                            else
+                            {
+                                <li data-tooltip="tooltip" data-placement="left" title="Đăng nhập">
+
+                                    <a href="/login.html"><i class="fas fa-user-tie"></i></a>
+                                </li>
+                                <li data-tooltip="tooltip" data-placement="left" title="Đăng ký">
+
+                                    <a href="/register.html"><i class="fas fa-user-plus"></i></a>
+                                </li>
+                            }
+                        </ul>
+                        <!--====== End - List ======-->
+                    </div>
+                    <!--====== End - Menu ======-->
+                </div>
+                <!--====== End - Dropdown Main plugin ======-->
+            </div>
+            <!--====== End - Primary Nav ======-->
+        </div>
+    </nav>
+    <!--====== End - Nav 1 ======-->
+    <!--====== Nav 2 ======-->
+    <nav class="secondary-nav-wrapper">
+        <div class="container">
+
+            <!--====== Secondary Nav ======-->
+            <div class="secondary-nav">
+
+                <!--====== Dropdown Main plugin ======-->
+                <div class="menu-init" id="navigation1">
+
+                    <button class="btn btn--icon toggle-mega-text fas fa-align-justify toggle-button" type="button"></button>
+
+                    <!--====== Menu ======-->
+                    <div class="ah-lg-mode">
+
+                        <span class="ah-close">✕ Đóng</span>
+
+                        <!--====== List ======-->
+                        <ul class="ah-list">
+                            <li class="has-dropdown">
+
+                                <span class="mega-text fas fa-align-justify"></span>
+
+                                <!--====== Mega Menu ======-->
+
+                                <span class="js-menu-toggle"></span>
+                                <div class="mega-menu">
+                                    <div class="mega-menu-wrap">
+                                        <div class="mega-menu-list">
+                                            <ul>
+                                                @for (int i = 0; i < Model.Count; i++)
+                                                {
+                                                    if (i == 0)
+                                                    {
+                                                        <li class="js-active">
+
+                                                            <a href="/courses.html?categoryId=@Model[i].Id">
+                                                                <i class="fas fa-tv u-s-m-r-6"></i>
+
+                                                                <span>@Model[i].Name</span>
+                                                            </a>
+
+                                                            <span class="js-menu-toggle js-toggle-mark"></span>
+                                                        </li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li>
+
+                                                            <a href="/courses.html?categoryId=@Model[i].Id">
+                                                                <i class="fas fa-tv u-s-m-r-6"></i>
+
+                                                                <span>@Model[i].Name</span>
+                                                            </a>
+
+                                                            <span class="js-menu-toggle"></span>
+                                                        </li>
+                                                    }
+                                                }
+                                            </ul>
+                                        </div>
+
+                                        @for (var i = 0; i < Model.Count; i++)
+                                        {
+                                            if (i == 0)
+                                            {
+                                                <div class="mega-menu-content js-active">
+                                                    @if (Model[i].CategoryViewModels.Count > 0)
+                                                    {
+                                                        <!--====== Mega Menu Row ======-->
+                                                        <div class="row">
+                                                            <div class="col-lg-3">
+                                                                <ul>
+                                                                    <li class="mega-list-title">
+
+                                                                        <a href="/courses.html?categoryId=@Model[i].Id">@Model[i].Name</a>
+                                                                    </li>
+                                                                    @foreach (var categoryViewModel in Model[i].CategoryViewModels)
+                                                                    {
+                                                                        <li>
+
+                                                                            <a href="/courses.html?categoryId=@categoryViewModel.Id">@categoryViewModel.Name</a>
+                                                                        </li>
+                                                                    }
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <!--====== End - Mega Menu Row ======-->
+                                                    }
+                                                    else
+                                                    {
+                                                        <h5>Không có danh mục</h5>
+                                                    }
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                    <div class="mega-menu-content">
+                                        @if (Model[i].CategoryViewModels.Count > 0)
+                                        {
+                                            <!--====== Mega Menu Row ======-->
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <ul>
+                                                        <li class="mega-list-title">
+
+                                                            <a href="/courses.html?categoryId=@Model[i].Id">@Model[i].Name</a>
+                                                        </li>
+                                                        @foreach (var categoryViewModel in Model[i].CategoryViewModels)
+                                                        {
+                                                            <li>
+
+                                                                <a href="/courses.html?categoryId=@categoryViewModel.Id">@categoryViewModel.Name</a>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <!--====== End - Mega Menu Row ======-->
+                                        }
+                                        else
+                                        {
+                                            <h5>Không có danh mục</h5>
+                                        }
+                                    </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                                <!--====== End - Mega Menu ======-->
+                            </li>
+                        </ul>
+                        <!--====== End - List ======-->
+                    </div>
+                    <!--====== End - Menu ======-->
+                </div>
+                <!--====== End - Dropdown Main plugin ======-->
+                <!--====== Dropdown Main plugin ======-->
+                <!--<div class="menu-init" id="navigation2">
+
+                    <button class="btn btn--icon toggle-button toggle-button--secondary fas fa-cog" type="button"></button>-->
+
+                    <!--====== Menu ======-->
+                    <!--<div class="ah-lg-mode">
+
+                        <span class="ah-close">✕ Đóng</span>-->
+
+                        <!--====== List ======-->
+                        <!--<ul class="ah-list ah-list--design2 ah-list--link-color-secondary">
+                            <li>
+
+                                <a href="shop-side-version-2.html">Sản phẩm mới</a>
+                            </li>
+                            <li class="has-dropdown">
+
+                                <a>PAGES<i class="fas fa-angle-down u-s-m-l-6"></i></a>-->
+
+                                <!--====== Dropdown ======-->
+
+                                <!--<span class="js-menu-toggle"></span>
+                                <ul style="width:170px">
+                                    <li class="has-dropdown has-dropdown--ul-left-100">
+
+                                        <a>Home<i class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>-->
+
+                                        <!--====== Dropdown ======-->
+
+                                        <!--<span class="js-menu-toggle"></span>
+                                        <ul style="width:118px">
+                                            <li>
+
+                                                <a href="index.html">Home 1</a>
+                                            </li>
+                                            <li>
+
+                                                <a href="index-2.html">Home 2</a>
+                                            </li>
+                                            <li>
+
+                                                <a href="index-3.html">Home 3</a>
+                                            </li>
+                                        </ul>-->
+                                        <!--====== End - Dropdown ======-->
+                                    <!--</li>
+                                    <li class="has-dropdown has-dropdown--ul-left-100">
+
+                                        <a>Account<i class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>-->
+
+                                        <!--====== Dropdown ======-->
+
+                                        <!--<span class="js-menu-toggle"></span>
+                                        <ul style="width:200px">
+                                            <li>
+
+                                                <a href="signin.html">Signin / Already Registered</a>
+                                            </li>
+                                            <li>
+
+                                                <a href="signup.html">Signup / Register</a>
+                                            </li>
+                                            <li>
+
+                                                <a href="lost-password.html">Lost Password</a>
+                                            </li>
+                                        </ul>-->
+                                        <!--====== End - Dropdown ======-->
+                                    <!--</li>
+                                    <li class="has-dropdown has-dropdown--ul-left-100">
+
+                                        <a href="dashboard.html">Dashboard<i class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>-->
+
+                                        <!--====== Dropdown ======-->
+
+                                        <!--<span class="js-menu-toggle"></span>
+                                        <ul style="width:200px">
+                                            <li class="has-dropdown has-dropdown--ul-left-100">
+
+                                                <a href="dashboard.html">Manage My Account<i class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>-->
+
+                                                <!--====== Dropdown ======-->
+
+                                                <!--<span class="js-menu-toggle"></span>
+                                                <ul style="width:180px">
+                                                    <li>
+
+                                                        <a href="dash-edit-profile.html">Edit Profile</a>
+                                                    </li>
+                                                    <li>
+
+                                                        <a href="dash-address-book.html">Edit Address Book</a>
+                                                    </li>
+                                                    <li>
+
+                                                        <a href="dash-manage-order.html">Manage Order</a>
+                                                    </li>
+                                                </ul>-->
+                                                <!--====== End - Dropdown ======-->
+                                            <!--</li>
+                                            <li>
+
+                                                <a href="dash-my-profile.html">My Profile</a>
+                                            </li>
+                                            <li class="has-dropdown has-dropdown--ul-left-100">
+
+                                                <a href="dash-address-book.html">Address Book<i class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>-->
+
+                                                <!--====== Dropdown ======-->
+
+                                                <!--<span class="js-menu-toggle"></span>
+                                                <ul style="width:180px">
+                                                    <li>
+
+                                                        <a href="dash-address-make-default.html">Address Make Default</a>
+                                                    </li>
+                                                    <li>
+
+                                                        <a href="dash-address-add.html">Add New Address</a>
+                                                    </li>
+                                                    <li>
+
+                                                        <a href="dash-address-edit.html">Edit Address Book</a>
+                                                    </li>
+                                                </ul>-->
+                                                <!--====== End - Dropdown ======-->
+                                            <!--</li>
+                                            <li>
+
+                                                <a href="dash-track-order.html">Track Order</a>
+                                            </li>
+                                            <li>
+
+                                                <a href="dash-my-order.html">My Orders</a>
+                                            </li>
+                                            <li>
+
+                                                <a href="dash-payment-option.html">My Payment Options</a>
+                                            </li>
+                                            <li>
+
+                                                <a href="dash-cancellation.html">My Returns & Cancellations</a>
+                                            </li>
+                                        </ul>-->
+                                        <!--====== End - Dropdown ======-->
+                                    <!--</li>
+                                    <li class="has-dropdown has-dropdown--ul-left-100">
+
+                                        <a>Empty<i class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>-->
+
+                                        <!--====== Dropdown ======-->
+
+                                        <!--<span class="js-menu-toggle"></span>
+                                        <ul style="width:200px">
+                                            <li>
+
+                                                <a href="empty-search.html">Empty Search</a>
+                                            </li>
+                                            <li>
+
+                                                <a href="empty-cart.html">Empty Cart</a>
+                                            </li>
+                                            <li>
+
+                                                <a href="empty-wishlist.html">Empty Wishlist</a>
+                                            </li>
+                                        </ul>-->
+                                        <!--====== End - Dropdown ======-->
+                                    <!--</li>
+                                    <li class="has-dropdown has-dropdown--ul-left-100">
+
+                                        <a>Product Details<i class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>-->
+
+                                        <!--====== Dropdown ======-->
+
+                                        <!--<span class="js-menu-toggle"></span>
+                                        <ul style="width:200px">
+                                            <li>
+
+                                                <a href="product-detail.html">Product Details</a>
+                                            </li>
+                                            <li>
+
+                                                <a href="product-detail-variable.html">Product Details Variable</a>
+                                            </li>
+                                            <li>
+
+                                                <a href="product-detail-affiliate.html">Product Details Affiliate</a>
+                                            </li>
+                                        </ul>-->
+                                        <!--====== End - Dropdown ======-->
+                                    <!--</li>
+                                    <li class="has-dropdown has-dropdown--ul-left-100">
+
+                                        <a>Shop Grid Layout<i class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>-->
+
+                                        <!--====== Dropdown ======-->
+
+                                        <!--<span class="js-menu-toggle"></span>
+                                        <ul style="width:200px">
+                                            <li>
+
+                                                <a href="shop-grid-left.html">Shop Grid Left Sidebar</a>
+                                            </li>
+                                            <li>
+
+                                                <a href="shop-grid-right.html">Shop Grid Right Sidebar</a>
+                                            </li>
+                                            <li>
+
+                                                <a href="shop-grid-full.html">Shop Grid Full Width</a>
+                                            </li>
+                                            <li>
+
+                                                <a href="shop-side-version-2.html">Shop Side Version 2</a>
+                                            </li>
+                                        </ul>-->
+                                        <!--====== End - Dropdown ======-->
+                                    <!--</li>
+                                    <li class="has-dropdown has-dropdown--ul-left-100">
+
+                                        <a>Shop List Layout<i class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>-->
+
+                                        <!--====== Dropdown ======-->
+
+                                        <!--<span class="js-menu-toggle"></span>
+                                        <ul style="width:200px">
+                                            <li>
+
+                                                <a href="shop-list-left.html">Shop List Left Sidebar</a>
+                                            </li>
+                                            <li>
+
+                                                <a href="shop-list-right.html">Shop List Right Sidebar</a>
+                                            </li>
+                                            <li>
+
+                                                <a href="shop-list-full.html">Shop List Full Width</a>
+                                            </li>
+                                        </ul>-->
+                                        <!--====== End - Dropdown ======-->
+                                    <!--</li>
+                                    <li>
+
+                                        <a href="cart.html">Cart</a>
+                                    </li>
+                                    <li>
+
+                                        <a href="wishlist.html">Wishlist</a>
+                                    </li>
+                                    <li>
+
+                                        <a href="checkout.html">Checkout</a>
+                                    </li>
+                                    <li>
+
+                                        <a href="faq.html">FAQ</a>
+                                    </li>
+                                    <li>
+
+                                        <a href="about.html">About us</a>
+                                    </li>
+                                    <li>
+
+                                        <a href="contact.html">Contact</a>
+                                    </li>
+                                    <li>
+
+                                        <a href="404.html">404</a>
+                                    </li>
+                                </ul>-->
+                                <!--====== End - Dropdown ======-->
+                            <!--</li>
+                            <li class="has-dropdown">
+
+                                <a>BLOG<i class="fas fa-angle-down u-s-m-l-6"></i></a>-->
+
+                                <!--====== Dropdown ======-->
+
+                                <!--<span class="js-menu-toggle"></span>
+                                <ul style="width:200px">
+                                    <li>
+
+                                        <a href="blog-left-sidebar.html">Blog Left Sidebar</a>
+                                    </li>
+                                    <li>
+
+                                        <a href="blog-right-sidebar.html">Blog Right Sidebar</a>
+                                    </li>
+                                    <li>
+
+                                        <a href="blog-sidebar-none.html">Blog Sidebar None</a>
+                                    </li>
+                                    <li>
+
+                                        <a href="blog-masonry.html">Blog Masonry</a>
+                                    </li>
+                                    <li>
+
+                                        <a href="blog-detail.html">Blog Details</a>
+                                    </li>
+                                </ul>-->
+                                <!--====== End - Dropdown ======-->
+                            <!--</li>
+                            <li>
+
+                                <a href="shop-side-version-2.html">VALUE OF THE DAY</a>
+                            </li>
+                            <li>
+
+                                <a href="shop-side-version-2.html">GIFT CARDS</a>
+                            </li>
+                        </ul>-->
+                        <!--====== End - List ======-->
+                    <!--</div>-->
+                    <!--====== End - Menu ======-->
+                <!--</div>-->
+                <!--====== End - Dropdown Main plugin ======-->
+                <!--====== Dropdown Main plugin ======-->
+                <div class="menu-init" id="navigation3">
+
+                    <button class="btn btn--icon toggle-button toggle-button--secondary fas fa-shopping-bag toggle-button-shop" type="button"></button>
+
+                    <!--====== Menu ======-->
+                    <div class="ah-lg-mode">
+
+                        <span class="ah-close">✕ Đóng</span>
+
+                        <!--====== List ======-->
+                        <ul class="ah-list ah-list--design1 ah-list--link-color-secondary">
+                            <li>
+
+                                <a href="/"><i class="fas fa-home u-c-brand"></i></a>
+                            </li>
+                            <li class="has-dropdown" id="headerCart">
+                                @await Component.InvokeAsync("HeaderCart")
+                            </li>
+                        </ul>
+                        <!--====== End - List ======-->
+                    </div>
+                    <!--====== End - Menu ======-->
+                </div>
+                <!--====== End - Dropdown Main plugin ======-->
+            </div>
+            <!--====== End - Secondary Nav ======-->
+        </div>
+    </nav>
+    <!--====== End - Nav 2 ======-->
+</header>

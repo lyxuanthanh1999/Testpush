@@ -1,0 +1,110 @@
+<div class="animated fadeIn">
+    <p-panel #pnl>
+        <p-header>
+            <div class="p-grid">
+                <div class="p-col-12">
+                    <h3>{{dialogTitle}}</h3>
+                </div>
+                <div class="p-g-6">
+                    <button pButton type="button" label="Quay lại trang danh sách" icon="fa fa-arrow-left" (click)="goBackToList()"></button>
+                </div>
+            </div>
+        </p-header>
+        <form class="form-horizontal form-label-left" novalidate [formGroup]="entityForm" (ngSubmit)="saveChange()">
+            <div class="p-grid-pad p-fluid p-grid-responsive">
+                <div style="align-items: center;" class="p-field p-grid">
+                    <div class="p-col-2">
+                        <span class="required">Tên Khóa Học:</span>
+                    </div>
+                    <div class="p-col-7">
+                        <input type="text" pInputText formControlName="name">
+                    </div>
+                    <div class="p-col-3">
+                        <app-validation-message [entityForm]="entityForm" fieldName="name" [validationMessages]="validation_messages"></app-validation-message>
+                    </div>
+                </div>
+                <div style="align-items: center;" class="p-field p-grid">
+                    <div class="p-col-2">
+                        <span class="required">Danh mục:</span>
+                    </div>
+                    <div class="p-col-7">
+                        <p-dropdown [options]="categories" [style]="{'width':'100%'}" placeholder="Chọn danh mục" filter="true" [showClear]="true" formControlName="categoryId">
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-3">
+                        <app-validation-message [entityForm]="entityForm" fieldName="categoryId" [validationMessages]="validation_messages"></app-validation-message>
+                    </div>
+                </div>
+                <div style="align-items: center;" class="p-field p-grid">
+                    <div class="p-col-2">
+                        <span class="required">Ảnh:</span>
+                    </div>
+                    <div class="p-col-7">
+                        <p-fileUpload *ngIf="this.filePath === ''" [showUploadButton]="false" (onRemove)="removeAttachments($event)" (onSelect)="selectAttachments($event)" [showCancelButton]="false" accept="image/*" maxFileSize="1000000000">
+                        </p-fileUpload>
+                        <ul style="padding: 0; margin: 0;" *ngIf="this.filePath !== ''">
+                            <li style="list-style: none; display: flex; align-items: center;">
+                                <a href="{{backendApiUrl + filePath}}">{{fileName}}</a>
+                                <button icon="pi pi-upload" pButton type="button" (click)="changeAttachment()" class="p-button-help p-ml-2"></button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="p-col-3">
+                    </div>
+                </div>
+                <div style="align-items: center;" class="p-field p-grid">
+                    <div class="p-col-2">
+                        <span class="required">Giá:</span>
+                    </div>
+                    <div class="p-col-7">
+                        <p-inputNumber mode="currency" currency="VND" locale="vi-VN" formControlName="price"></p-inputNumber>
+                    </div>
+                    <div class="p-col-3">
+                        <app-validation-message [entityForm]="entityForm" fieldName="price" [validationMessages]="validation_messages"></app-validation-message>
+                    </div>
+                </div>
+                <div style="align-items: center;" class="p-field p-grid">
+                    <div class="p-col-2">
+                        <span class="required">Mô tả:</span>
+                    </div>
+                    <div class="p-col-7">
+                        <textarea [rows]="5" [cols]="30" pInputTextarea formControlName="description" rows="5"></textarea>
+                    </div>
+                    <div class="p-col-3"></div>
+                </div>
+                <div style="align-items: center;" class="p-field p-grid">
+                    <div class="p-col-2">
+                        <span class="required">Nội dung:</span>
+                    </div>
+                    <div class="p-col-7">
+                        <p-editor formControlName="content" [style]=" {'height':'320px'}"></p-editor>
+                    </div>
+                    <div class="p-col-3">
+                    </div>
+                </div>
+                <div style="align-items: center;" *ngIf="role !=='Teacher'" class="p-field p-grid">
+                    <div class="p-col-2">
+                        <span class="required">Status</span>
+                    </div>
+                    <div class="p-col-7">
+                        <p-dropdown appendTo="body" [options]="isStatus" emptyFilterMessage="Không có dữ liệu" [style]="{'width':'100%'}" formControlName="status">
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-3">
+                        <app-validation-message [entityForm]="entityForm" fieldName="status" [validationMessages]="validation_messages"></app-validation-message>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+        <p-footer>
+            <button pButton style="margin-right: 5px;" type="button" label="Quay lại trang danh sách" icon="fa fa-arrow-left" (click)="goBackToList()"></button>
+            <button pButton type="button" style="margin-right: 5px;" [disabled]="!entityForm.valid" class="p-button-success" label="Lưu lại" icon="fa fa-floppy-o" (click)="saveChange()"></button>
+
+            <p-blockUI [target]="pnl" [blocked]="blockedPanel">
+                <p-progressSpinner [style]="{width: '100px', height: '100px', position:'absolute',top:'25%',left:'50%'}" strokeWidth="2" animationDuration=".5s"></p-progressSpinner>
+            </p-blockUI>
+        </p-footer>
+    </p-panel>
+</div>

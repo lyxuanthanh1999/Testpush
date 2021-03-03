@@ -1,0 +1,386 @@
+﻿@using System.Globalization
+@using Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Infrastructure.Common
+@model HomeViewModel
+@{
+    var env = "https://localhost:44342";
+
+}
+<!--====== Primary Slider ======-->
+<div class="s-skeleton s-skeleton--h-600 s-skeleton--bg-grey">
+    <div class="owl-carousel primary-style-1" id="hero-slider">
+        <div class="hero-slide hero-slide--1">
+            @*<div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="slider-content slider-content--animation">
+
+                            <span class="content-span-1 u-c-secondary">Latest Update Stock</span>
+
+                            <span class="content-span-2 u-c-secondary">30% Off On Electronics</span>
+
+                            <span class="content-span-3 u-c-secondary">Find electronics on best prices, Also Discover most selling products of electronics</span>
+
+                            <span class="content-span-4 u-c-secondary">
+                                Starting At
+
+                                <span class="u-c-brand">$1050.00</span>
+                            </span>
+
+                            <a class="shop-now-link btn--e-brand" href="shop-side-version-2.html">SHOP NOW</a>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        </div>
+        <div class="hero-slide hero-slide--2">
+            @*<div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="slider-content slider-content--animation">
+
+                            <span class="content-span-1 u-c-white">Find Top Brands</span>
+
+                            <span class="content-span-2 u-c-white">10% Off On Electronics</span>
+
+                            <span class="content-span-3 u-c-white">Find electronics on best prices, Also Discover most selling products of electronics</span>
+
+                            <span class="content-span-4 u-c-white">
+                                Starting At
+
+                                <span class="u-c-brand">$380.00</span>
+                            </span>
+
+                            <a class="shop-now-link btn--e-brand" href="shop-side-version-2.html">SHOP NOW</a>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        </div>
+        <div class="hero-slide hero-slide--3">
+            @*<div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="slider-content slider-content--animation">
+
+                            <span class="content-span-1 u-c-secondary">Find Top Brands</span>
+
+                            <span class="content-span-2 u-c-secondary">10% Off On Electronics</span>
+
+                            <span class="content-span-3 u-c-secondary">Find electronics on best prices, Also Discover most selling products of electronics</span>
+
+                            <span class="content-span-4 u-c-secondary">
+                                Starting At
+
+                                <span class="u-c-brand">$550.00</span>
+                            </span>
+
+                            <a class="shop-now-link btn--e-brand" href="shop-side-version-2.html">SHOP NOW</a>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        </div>
+    </div>
+</div>
+<!--====== End - Primary Slider ======-->
+<!--====== Section 1 ======-->
+<!--====== End - Section 1 ======-->
+<!--====== Section 2 ======-->
+<div class="u-s-p-y-30">
+
+    <!--====== Section Intro ======-->
+    <div class="section__intro u-s-m-b-16">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section__text-wrap">
+                        <h1 class="section__heading u-c-secondary u-s-m-b-12">Khóa học nổi bật</h1>
+
+                        <span class="section__span u-c-silver">Chọn danh mục</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====== End - Section Intro ======-->
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="filter-category-container">
+                        <div class="filter__category-wrapper">
+
+                            <button class="btn filter__btn filter__btn--style-1 js-checked" type="button" data-filter="*">Tất cả</button>
+                        </div>
+                        @foreach (var item in Model.HomeCategoryViewModels)
+                        {
+                            var filter = item.Name.Replace(" ", "").ToLower();
+                            <div class="filter__category-wrapper">
+
+                                <button class="btn filter__btn filter__btn--style-1" type="button" data-filter=".@filter">@item.Name</button>
+                            </div>
+                        }
+                    </div>
+                    <div class="filter__grid-wrapper u-s-m-t-30">
+                        <div class="row">
+                            @foreach (var itemParent in Model.HomeCategoryViewModels)
+                            {
+
+                                var filter = itemParent.Name.Replace(" ", "").ToLower();
+                                @foreach (var itemCourse in itemParent.CourseViewModels)
+                                {
+                                    var img = env + itemCourse.Image;
+                                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 u-s-m-b-30 filter__item @filter">
+                                        <div class="product-o product-o--hover-on product-o--radius">
+                                            <div class="product-o__wrap">
+
+                                                <a class="aspect aspect--bg-grey aspect--square u-d-block" href="/courses-@(itemCourse.Id).html">
+
+                                                    <img class="aspect__img" src="@img" alt="">
+                                                </a>
+                                                @if (User.Identity.IsAuthenticated)
+                                                {
+                                                    if (Model.ActiveCoursesViewModels.All(x => x.CourseId != itemCourse.Id))
+                                                    {
+                                                        <div class="product-o__action-wrap">
+                                                            <ul class="product-o__action-list">
+                                                                <li>
+
+                                                                    <a class="add-product-in-cart" data-status="@itemCourse.Status" data-id="@itemCourse.Id" data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip" data-placement="top" title="Thêm vào giỏ"><i class="fas fa-plus-circle"></i></a>
+
+                                                                    @*<a data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip" data-placement="top" title="Add to Cart"><i class="fas fa-plus-circle"></i></a>*@
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <div class="product-o__action-wrap">
+                                                        <ul class="product-o__action-list">
+                                                            <li>
+
+                                                                <a class="add-product-in-cart" data-status="@itemCourse.Status" data-id="@itemCourse.Id" data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip" data-placement="top" title="Thêm vào giỏ"><i class="fas fa-plus-circle"></i></a>
+
+                                                                @*<a data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip" data-placement="top" title="Add to Cart"><i class="fas fa-plus-circle"></i></a>*@
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                }
+                                            </div>
+
+                                            <span class="product-o__category">
+
+                                                <a href="/courses.html?categoryId=@itemCourse.CategoryId">@itemCourse.CategoryName</a>
+                                            </span>
+
+                                            <span class="product-o__name">
+
+                                                <a href="/courses-@(itemCourse.Id).html">@itemCourse.Name</a>
+                                            </span>
+                                            <span class="product-o__price">
+                                                @if (itemCourse.DiscountPercent > 0)
+                                                {
+                                                    var promotionPrice = itemCourse.Price - (itemCourse.Price * itemCourse.DiscountPercent / 100);
+                                                    @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", @promotionPrice)
+                                                    <span class="product-o__discount">
+                                                        @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", itemCourse.Price)
+                                                    </span>
+                                                }
+                                                else if (itemCourse.DiscountAmount > 0)
+                                                {
+                                                    @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", itemCourse.DiscountAmount)
+                                                    <span class="product-o__discount">
+                                                        @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", itemCourse.Price)
+                                                    </span>
+
+                                                }
+                                                else
+                                                {
+                                                    @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", itemCourse.Price)
+                                                }
+                                            </span>
+                                        </div>
+                                    </div>
+                                }
+
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="load-more">
+                        <button class="btn btn--e-brand" onclick="location.href='courses.html'" type="button">Xem thêm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====== End - Section Content ======-->
+</div>
+<!--====== End - Section 2 ======-->
+<!--====== Section 3 ======-->
+<!--====== End - Section 3 ======-->
+<!--====== Section 4 ======-->
+<div class="u-s-p-b-30">
+
+    <!--====== Section Intro ======-->
+    <div class="section__intro u-s-m-b-46">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section__text-wrap">
+                        <h1 class="section__heading u-c-secondary u-s-m-b-12">Sản phẩm mới</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====== End - Section Intro ======-->
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="container">
+            <div class="slider-fouc">
+                <div class="owl-carousel product-slider" data-item="4">
+                    @foreach (var courseViewModel in Model.NewCourses)
+                    {
+                        var img = env + courseViewModel.Image;
+                        <div class="u-s-m-b-30">
+                            <div class="product-o product-o--hover-on">
+                                <div class="product-o__wrap">
+
+                                    <a class="aspect aspect--bg-grey aspect--square u-d-block" href="/courses-@(courseViewModel.Id).html">
+                                        <img class="aspect__img" src="@img" alt="">
+                                    </a>
+
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        if (Model.ActiveCoursesViewModels.All(x => x.CourseId != courseViewModel.Id))
+                                        {
+                                            <div class="product-o__action-wrap">
+                                                <ul class="product-o__action-list">
+                                                    <li>
+                                                        <a class="add-product-in-cart" data-status="@courseViewModel.Status" data-id="@courseViewModel.Id" data-tooltip="tooltip" data-placement="top" title="Add to Cart"><i class="fas fa-plus-circle"></i></a>
+
+                                                        @*<a data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip" data-placement="top" title="Add to Cart"><i class="fas fa-plus-circle"></i></a>*@
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="product-o__action-wrap">
+                                            <ul class="product-o__action-list">
+                                                <li>
+                                                    <a class="add-product-in-cart" data-status="@courseViewModel.Status" data-id="@courseViewModel.Id" data-tooltip="tooltip" data-placement="top" title="Add to Cart"><i class="fas fa-plus-circle"></i></a>
+
+                                                    @*<a data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip" data-placement="top" title="Add to Cart"><i class="fas fa-plus-circle"></i></a>*@
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    }
+                                </div>
+
+                                <span class="product-o__category">
+
+                                    <a href="/courses.html?categoryId=@courseViewModel.CategoryId">@courseViewModel.CategoryName</a>
+                                </span>
+
+                                <span class="product-o__name">
+
+                                    <a href="/courses-@(courseViewModel.Id).html">@courseViewModel.Name</a>
+                                </span>
+                                <span class="product-o__price">
+                                    @if (courseViewModel.DiscountPercent > 0)
+                                    {
+                                        var promotionPrice = courseViewModel.Price - (courseViewModel.Price * courseViewModel.DiscountPercent / 100);
+                                        @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", @promotionPrice)
+                                        <span class="product-o__discount">
+                                            @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", courseViewModel.Price)
+                                        </span>
+                                    }
+                                    else if (courseViewModel.DiscountAmount > 0)
+                                    {
+                                        @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", courseViewModel.DiscountAmount)
+                                        <span class="product-o__discount">
+                                            @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", courseViewModel.Price)
+                                        </span>
+
+                                    }
+                                    else
+                                    {
+                                        @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", courseViewModel.Price)
+                                    }
+                                </span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====== End - Section Content ======-->
+</div>
+<!--====== End - Section 4 ======-->
+<!--====== Section 5 ======-->
+<!--====== End - Section 5 ======-->
+<!--====== Section 6 ======-->
+<!--====== End - Section 6 ======-->
+<!--====== Section 7 ======-->
+<!--====== End - Section 7 ======-->
+<!--====== Section 8 ======-->
+<!--====== End - Section 8 ======-->
+<!--====== Section 9 ======-->
+<div class="u-s-p-b-60">
+
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 u-s-m-b-30">
+                    <div class="service u-h-100">
+                        <div class="service__icon"><i class="fas fa-truck"></i></div>
+                        <div class="service__info-wrap">
+
+                            <span class="service__info-text-1">Giao hàng miễn phí</span>
+
+                            <span class="service__info-text-2">Miễn phí giao hàng trên toàn quốc</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 u-s-m-b-30">
+                    <div class="service u-h-100">
+                        <div class="service__icon"><i class="fas fa-redo"></i></div>
+                        <div class="service__info-wrap">
+
+                            <span class="service__info-text-1">Bảo mật thông tin</span>
+
+                            <span class="service__info-text-2">Thông tin sẽ được bảo mật</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 u-s-m-b-30">
+                    <div class="service u-h-100">
+                        <div class="service__icon"><i class="fas fa-headphones-alt"></i></div>
+                        <div class="service__info-wrap">
+
+                            <span class="service__info-text-1">Hỗ trợ 24/7</span>
+
+                            <span class="service__info-text-2">Hỗ trợ trực tuyến 24/7</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====== End - Section Content ======-->
+</div>
+<!--====== End - Section 9 ======-->
+<!--====== Section 10 ======-->
+<!--====== End - Section 10 ======-->
+<!--====== Section 11 ======-->
+<!--====== End - Section 11 ======-->
+<!--====== Section 12 ======-->
+<!--====== End - Section 12 ======-->

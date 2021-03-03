@@ -1,0 +1,59 @@
+<!--Modal add and edit-->
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{dialogTitle}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body div-scroll">
+    <p-panel #pnl header="Thông tin" [toggleable]="true" [collapsed]="false" styleClass="m-b-10">
+        <div *ngIf="comment" class="p-grid-pad p-fluid p-grid-responsive">
+            <div style="align-items: center;" class="p-field p-grid">
+                <div class="p-col-3">
+                    <span class="required">Nội dụng:</span>
+                </div>
+                <div class="p-col-9">
+                    <span>{{comment.content}}</span>
+                </div>
+            </div>
+            <div style="align-items: center;" class="p-field p-grid">
+                <div class="p-col-3">
+                    <span class="required">Ngày tạo:</span>
+                </div>
+                <div class="p-col-9">
+                    <span>{{comment.creationTime | date: 'dd/MM/yyyy hh:mm:ss'}}</span>
+                </div>
+            </div>
+            <div style="align-items: center;" class="p-field p-grid">
+                <div class="p-col-3">
+                    <span class="required">Người tạo:</span>
+                </div>
+                <div class="p-col-9">
+                    <span>{{comment.ownerUser}}</span>
+                </div>
+            </div>
+            <div style="align-items: center;" class="p-field p-grid">
+                <div class="p-col-3">
+                    <span class="required">Trả lời cho bình luận:</span>
+                </div>
+                <div class="p-col-9">
+                    <span>{{comment.replyUser}}</span>
+                </div>
+            </div>
+            <div style="align-items: center;" class="p-field p-grid">
+                <div class="p-col-3">
+                    <span class="required">Kiểu bình luận:</span>
+                </div>
+                <div class="p-col-9">
+                    <span>{{comment.entityType}}</span>
+                </div>
+            </div>
+        </div>
+        <p-blockUI [target]="pnl" [blocked]="blockedPanel">
+            <p-progressSpinner [style]="{width: '100px', height: '100px', position:'absolute',top:'25%',left:'50%'}" strokeWidth="2" animationDuration=".5s"></p-progressSpinner>
+        </p-blockUI>
+    </p-panel>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Đóng</button>
+</div>

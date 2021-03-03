@@ -1,0 +1,307 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\DoAnTotNghiep\\QL_Vat_Lieu_Xay_Dung\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen(5)\\DATN_KINH_DOANH_KHOA_HOC_TU_NHIEN\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Api\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Api.csproj": {}
+  },
+  "projects": {
+    "D:\\DoAnTotNghiep\\QL_Vat_Lieu_Xay_Dung\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen(5)\\DATN_KINH_DOANH_KHOA_HOC_TU_NHIEN\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Api\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\DoAnTotNghiep\\QL_Vat_Lieu_Xay_Dung\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen(5)\\DATN_KINH_DOANH_KHOA_HOC_TU_NHIEN\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Api\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Api.csproj",
+        "projectName": "Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Api",
+        "projectPath": "D:\\DoAnTotNghiep\\QL_Vat_Lieu_Xay_Dung\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen(5)\\DATN_KINH_DOANH_KHOA_HOC_TU_NHIEN\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Api\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Api.csproj",
+        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+        "outputPath": "D:\\DoAnTotNghiep\\QL_Vat_Lieu_Xay_Dung\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen(5)\\DATN_KINH_DOANH_KHOA_HOC_TU_NHIEN\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Api\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 20.1.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\Dev Epress\\Components\\System\\Components\\Packages": {},
+          "https://www.nuget.org/api/v2/": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {
+              "D:\\DoAnTotNghiep\\QL_Vat_Lieu_Xay_Dung\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen(5)\\DATN_KINH_DOANH_KHOA_HOC_TU_NHIEN\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Domain\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Domain.csproj": {
+                "projectPath": "D:\\DoAnTotNghiep\\QL_Vat_Lieu_Xay_Dung\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen(5)\\DATN_KINH_DOANH_KHOA_HOC_TU_NHIEN\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Domain\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Domain.csproj"
+              },
+              "D:\\DoAnTotNghiep\\QL_Vat_Lieu_Xay_Dung\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen(5)\\DATN_KINH_DOANH_KHOA_HOC_TU_NHIEN\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Infrastructure\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Infrastructure.csproj": {
+                "projectPath": "D:\\DoAnTotNghiep\\QL_Vat_Lieu_Xay_Dung\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen(5)\\DATN_KINH_DOANH_KHOA_HOC_TU_NHIEN\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Infrastructure\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.35, )"
+            },
+            "EPPlus": {
+              "target": "Package",
+              "version": "[5.4.2, )"
+            },
+            "FluentValidation.AspNetCore": {
+              "target": "Package",
+              "version": "[9.2.0, )"
+            },
+            "IdentityModel": {
+              "target": "Package",
+              "version": "[4.4.0, )"
+            },
+            "IdentityServer4": {
+              "target": "Package",
+              "version": "[3.1.4, )"
+            },
+            "IdentityServer4.AspNetIdentity": {
+              "target": "Package",
+              "version": "[3.1.4, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[3.1.10, )"
+            },
+            "Microsoft.AspNetCore.Hosting": {
+              "target": "Package",
+              "version": "[2.2.7, )"
+            },
+            "Microsoft.AspNetCore.Hosting.Abstractions": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Hosting.Server.Abstractions": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.9, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[3.1.9, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
+              "target": "Package",
+              "version": "[3.1.10, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.9, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.4, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
+            },
+            "Serilog": {
+              "target": "Package",
+              "version": "[2.10.0, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[3.4.0, )"
+            },
+            "Serilog.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Serilog.Settings.Configuration": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Serilog.Sinks.Async": {
+              "target": "Package",
+              "version": "[1.4.0, )"
+            },
+            "Serilog.Sinks.Console": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            },
+            "Serilog.Sinks.File": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
+            "Spire.XLS": {
+              "target": "Package",
+              "version": "[10.12.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[5.6.3, )"
+            },
+            "Swashbuckle.AspNetCore.Swagger": {
+              "target": "Package",
+              "version": "[5.6.3, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerGen": {
+              "target": "Package",
+              "version": "[5.6.3, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerUI": {
+              "target": "Package",
+              "version": "[5.6.3, )"
+            },
+            "Xabe.FFmpeg": {
+              "target": "Package",
+              "version": "[4.4.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.404\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\DoAnTotNghiep\\QL_Vat_Lieu_Xay_Dung\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen(5)\\DATN_KINH_DOANH_KHOA_HOC_TU_NHIEN\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Domain\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\DoAnTotNghiep\\QL_Vat_Lieu_Xay_Dung\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen(5)\\DATN_KINH_DOANH_KHOA_HOC_TU_NHIEN\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Domain\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Domain.csproj",
+        "projectName": "Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Domain",
+        "projectPath": "D:\\DoAnTotNghiep\\QL_Vat_Lieu_Xay_Dung\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen(5)\\DATN_KINH_DOANH_KHOA_HOC_TU_NHIEN\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Domain\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Domain.csproj",
+        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+        "outputPath": "D:\\DoAnTotNghiep\\QL_Vat_Lieu_Xay_Dung\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen(5)\\DATN_KINH_DOANH_KHOA_HOC_TU_NHIEN\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen\\Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 20.1.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\Dev Epress\\Components\\System\\Components\\Packages": {},
+          "https://www.nuget.org/api/v2/": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[9.2.2, )"
+            },
+            "FluentValidation.AspNetCore": {
+              "target": "Package",
+              "version": "[9.2.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.9, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[3.1.9, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.9, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[3.1.9, )"
+            },
+            "Microsoft.Extensions.Configuration.FileExtensions": {
+              "target": "Package",
+              "version": "[3.1.9, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[3.1.9, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.404\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

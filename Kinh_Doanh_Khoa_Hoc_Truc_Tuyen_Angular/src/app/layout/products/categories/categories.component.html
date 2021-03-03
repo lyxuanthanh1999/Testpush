@@ -1,0 +1,49 @@
+<div class="animated fadeIn">
+    <p-panel #pnl>
+        <p-header style="width: 100%">
+            <div class="p-grid">
+                <div class="p-col-12">
+                    <h3>Danh sách danh mục</h3>
+                </div>
+                <div class="p-col-6">
+                    <button style="margin-right: 5px;" appPermission appFunction="Categories" appAction="Create" pButton type="button" label="Thêm" icon="fa fa-plus" (click)="showAddModal()"></button>
+                    <button style="margin-right: 5px;" appPermission appFunction="Categories" appAction="Update" pButton type="button" label="Sửa" icon="fa fa-edit" class="p-button-warning" *ngIf="selectedItems.length == 1" (click)="showEditModal()"></button>
+                    <button style="margin-right: 5px;" appPermission appFunction="Categories" appAction="Delete" pButton type="button" label="Xóa" icon="fa fa-trash" class="p-button-danger" *ngIf="selectedItems.length > 0" (click)="deleteItems()"></button>
+                </div>
+            </div>
+        </p-header>
+        <p-treeTable *ngIf="items" [value]="items" selectionMode="multiple" [(selection)]="selectedItems" [metaKeySelection]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 10%" class="p-text-center">
+                        <p-treeTableHeaderCheckbox></p-treeTableHeaderCheckbox>
+                    </th>
+                    <th class="p-grid-hidden-xs p-text-center" style="width: 10%">Mã</th>
+                    <th class="p-text-center">Tên</th>
+                    <th style="width: 10%" class="p-text-center">Thứ tự</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+                <tr [ttRow]="rowNode">
+                    <td style="width: 10%">
+                        <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                        <p-treeTableCheckbox [value]="rowNode"></p-treeTableCheckbox>
+                    </td>
+                    <td class="p-grid-hidden-xs p-text-center" style="width: 10%">
+                        {{rowData.id}}
+                    </td>
+                    <td class="p-text-center">
+                        {{rowData.name}}
+                    </td>
+                    <td style="width: 10%" class="p-grid-hidden-sm p-text-center">
+                        {{rowData.sortOrder}}
+                    </td>
+
+                </tr>
+            </ng-template>
+        </p-treeTable>
+        <p-blockUI [target]="pnl" [blocked]="blockedPanel">
+            <p-progressSpinner [style]="{width: '100px', height: '100px', position:'absolute',top:'25%',left:'50%'}" strokeWidth="2" animationDuration=".5s"></p-progressSpinner>
+        </p-blockUI>
+    </p-panel>
+</div>

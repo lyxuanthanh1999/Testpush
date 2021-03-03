@@ -1,0 +1,112 @@
+<!--Modal add and edit-->
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{dialogTitle}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form class="form-horizontal form-label-left" novalidate [formGroup]="entityForm" (ngSubmit)="saveChange()">
+    <div class="modal-body div-scroll">
+        <p-panel #pnl header="Thông tin" [toggleable]="true" [collapsed]="false" styleClass="m-b-10">
+            <div class="p-grid-pad p-fluid p-grid-responsive">
+                <div style="align-items: center;" class="p-field p-grid">
+                    <div class="p-col-3">
+                        <span class="required">Tên sự kiện:</span>
+                    </div>
+                    <div class="p-col-6">
+                        <input type="text" pInputText [pKeyFilter]="noSpecial" formControlName="name">
+                    </div>
+                    <div class="p-col-3">
+                        <app-validation-message [entityForm]="entityForm" fieldName="name" [validationMessages]="validation_messages"></app-validation-message>
+                    </div>
+                </div>
+                <div style="align-items: center;" class="p-field p-grid">
+                    <div class="p-col-3">
+                        <span class="required">Nội dung:</span>
+                    </div>
+                    <div class="p-col-6">
+                        <textarea [rows]="5" [cols]="30" pInputTextarea formControlName="content" rows="5"></textarea>
+                    </div>
+                    <div class="p-col-3"></div>
+                </div>
+                <div style="align-items: center;" class="p-field p-grid">
+                    <div class="p-col-3">
+                        <span class="required">Từ ngày:</span>
+                    </div>
+                    <div class="p-col-6">
+                        <p-calendar formControlName="fromDate" dateFormat="dd/mm/yy" [showIcon]="true" [locale]="vi" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" showButtonBar="true">
+                        </p-calendar>
+                    </div>
+                    <div class="p-col-3">
+                        <app-validation-message [entityForm]="entityForm" fieldName="fromDate" [validationMessages]="validation_messages"></app-validation-message>
+                    </div>
+                </div>
+                <div style="align-items: center;" class="p-field p-grid">
+                    <div class="p-col-3">
+                        <span class="required">Đến ngày:</span>
+                    </div>
+                    <div class="p-col-6">
+                        <p-calendar formControlName="toDate" dateFormat="dd/mm/yy" [showIcon]="true" [locale]="vi" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" showButtonBar="true">
+                        </p-calendar>
+                    </div>
+                    <div class="p-col-3">
+                        <app-validation-message [entityForm]="entityForm" fieldName="toDate" [validationMessages]="validation_messages"></app-validation-message>
+                    </div>
+                </div>
+                <div style="align-items: center;" class="p-field p-grid">
+                    <div class="p-col-3">
+                        <span class="required">Phương thức giảm giá</span>
+                    </div>
+                    <div class="p-col-6 ">
+                        <p-dropdown [options]="method" (onChange)="onChangeDiscount($event)" emptyFilterMessage="Không có dữ liệu" [style]="{'width':'100%'}" formControlName="chooseDiscount">
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-3 ">
+                        <app-validation-message [entityForm]="entityForm " fieldName="chooseDiscount" [validationMessages]="validation_messages "></app-validation-message>
+                    </div>
+                </div>
+                <div style="align-items: center;" class="p-field p-grid" *ngIf="isHiddenAmount">
+                    <div class="p-col-3 ">
+                        <span class="required ">Giảm giá theo giá:</span>
+                    </div>
+                    <div class="p-col-6 ">
+                        <p-inputNumber mode="currency" currency="VND" locale="vi-VN" formControlName="discountAmount"></p-inputNumber>
+                    </div>
+                    <div class="p-col-3 ">
+                        <app-validation-message [entityForm]="entityForm " fieldName="discountAmount" [validationMessages]="validation_messages "></app-validation-message>
+                    </div>
+                </div>
+                <div style="align-items: center;" class="p-field p-grid" *ngIf="isHiddenPercent">
+                    <div class="p-col-3 ">
+                        <span class="required ">Giảm giá theo %:</span>
+                    </div>
+                    <div class="p-col-6 ">
+                        <p-inputNumber inputId="percent" prefix="%" formControlName="discountPercent" inputId="percent" prefix="%"> </p-inputNumber>
+                    </div>
+                    <div class="p-col-3 ">
+                        <app-validation-message [entityForm]="entityForm " fieldName="discountPercent" [validationMessages]="validation_messages "></app-validation-message>
+                    </div>
+                </div>
+                <div style="align-items: center;" class="p-field p-grid">
+                    <div class="p-col-3">
+                        <span class="required">Trạng thái</span>
+                    </div>
+                    <div class="p-col-6 ">
+                        <p-dropdown [options]="isActive" emptyFilterMessage="Không có dữ liệu" [style]="{'width':'100%'}" formControlName="status">
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-3 ">
+                        <app-validation-message [entityForm]="entityForm" fieldName="status" [validationMessages]="validation_messages"></app-validation-message>
+                    </div>
+                </div>
+            </div>
+            <p-blockUI [target]="pnl" [blocked]="blockedPanel">
+                <p-progressSpinner [style]="{width: '100px', height: '100px', position:'absolute',top:'25%',left:'50%'}" strokeWidth="2" animationDuration=".5s"></p-progressSpinner>
+            </p-blockUI>
+        </p-panel>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" [disabled]="!entityForm.valid || btnDisabled">Lưu lại</button> &nbsp;
+        <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Đóng</button>
+    </div>
+</form>

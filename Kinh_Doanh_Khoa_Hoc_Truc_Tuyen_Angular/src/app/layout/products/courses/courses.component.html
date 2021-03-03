@@ -1,0 +1,139 @@
+<div class="animated fadeIn">
+    <p-panel #pnl>
+        <p-header style="width: 100%">
+            <div class="p-grid">
+                <div class="p-col-12">
+                    <h3>Danh sách khóa học</h3>
+                </div>
+                <div class="p-col-7">
+                    <button style="margin-right: 5px;" apPermission appFunction="Courses" appAction="Create" pButton type="button" label="Thêm" icon="fa fa-plus" (click)="showAddModal()"></button>
+                    <button style="margin-right: 5px;" appPermission appFunction="Courses" appAction="Update" pButton type="button" label="Sửa" icon="fa fa-edit" class="p-button-warning" *ngIf="selectedItems.length== 1" (click)="showEditModal()"></button>
+                    <button style="margin-right: 5px;" appPermission appFunction="Courses" appAction="Delete" pButton type="button" label="Xóa" icon="fa fa-trash" class="p-button-danger" *ngIf="selectedItems.length > 0" (click)="deleteItems()"></button>
+                    <button style="margin-right: 5px;" appPermission appFunction="Courses" appAction="Approve" pButton type="button" label="Duyệt" icon="fa fa-check" class="p-button-success" *ngIf="role !=='Teacher' && selectedItems.length > 0 && checkChanged(selectedItems) == -1"
+                        (click)="approve()"></button>
+                    <button style="margin-right: 5px;" appPermission appFunction="Courses" appAction="View" pButton type="button" label="Bình Luận" icon="fa fa-users" class="p-button-help" *ngIf="selectedItems.length == 1" (click)="viewComment()"></button>
+                    <button style="margin-right: 5px;" appPermission appFunction="Courses" appAction="View" pButton type="button" label="Bài Học" icon="fa fa-hand-o-right" class="p-button-secondary" *ngIf="selectedItems.length == 1" (click)="viewLesson()"></button>
+                </div>
+                <div class="p-col-2">
+                    <p-checkbox label="Kích Hoạt Khóa Học" class="p-pt-2 p-text-center" [(ngModel)]="showActivateCourses" (click)="showHideActivateCoursesTable()" binary="true">
+                    </p-checkbox>
+                </div>
+                <div class="p-col-3">
+                    <input style="width: 100%;" pInputText (keyup.enter)="loadData()" [(ngModel)]="keyword" placeholder="Nhập từ khóa..." type="text">
+                </div>
+            </div>
+        </p-header>
+
+        <p-table #dt [value]="items" [(selection)]="selectedItems" [metaKeySelection]="true" [responsive]="true" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="p-text-center" style="width: 50px">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th class="p-text-center" style="width: 150px" [pSortableColumn]="'image'">Ảnh
+                        <p-sortIcon [field]="'image'"></p-sortIcon>
+                    </th>
+                    <th class="p-text-center" [pSortableColumn]="'name'">Tên khóa học
+                        <p-sortIcon [field]="'name'"></p-sortIcon>
+                    </th>
+                    <th class="p-text-center" [pSortableColumn]="'content'">Nội dung
+                        <p-sortIcon [field]="'content'"></p-sortIcon>
+                    </th>
+                    <th class="p-text-center" [pSortableColumn]="'description'">Mô tả
+                        <p-sortIcon [field]="'description'"></p-sortIcon>
+                    </th>
+                    <th class="p-text-center" [pSortableColumn]="'price'">Giá
+                        <p-sortIcon [field]="'price'"></p-sortIcon>
+                    </th>
+                    <th class="p-text-center" style="width: 150px" [pSortableColumn]="'categoryName'">Tên danh mục
+                        <p-sortIcon [field]="'categoryName'"></p-sortIcon>
+                    </th>
+                    <th class="p-text-center" style="width: 120px" [pSortableColumn]="'status'">Trạng thái
+                        <p-sortIcon [field]="'status'"></p-sortIcon>
+                    </th>
+                </tr>
+
+            </ng-template>
+            <ng-template pTemplate="body" let-row>
+                <tr [pSelectableRow]="row" [pSelectableRowIndex]="row">
+                    <td style="width: 50px">
+                        <p-tableCheckbox [value]="row"></p-tableCheckbox>
+                    </td>
+                    <td style="width: 150px">
+                        <img style="width: 120px" src="{{backendApiUrl + row.image}}" alt="Hinh anh">
+                    </td>
+                    <td>{{row.name | formatData: 30}}</td>
+                    <td>{{row.content | formatData: 30}}</td>
+                    <td>{{row.description | formatData: 30}}</td>
+                    <td>{{row.price | currency:'VND':'symbol':'1.0-3' }}</td>
+                    <td style="width: 150px">{{row.categoryName}}</td>
+                    <td style="width: 120px">{{row.status | formatStatusCourses}}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                <div style="text-align: left" class="font-weight-bold">
+                    Tổng số bản ghi: {{totalRecords}}
+                </div>
+            </ng-template>
+        </p-table>
+        <p-footer>
+
+            <p-paginator dropdownAppendTo="body" [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="pageChanged($event)" [rowsPerPageOptions]="[5,10,20,100]"></p-paginator>
+            <p-blockUI [target]="pnl" [blocked]="blockedPanel">
+                <p-progressSpinner [style]="{width: '100px', height: '100px', position: 'absolute',top: '25%',left: '50%'}" strokeWidth="2" animationDuration=".5s"></p-progressSpinner>
+            </p-blockUI>
+        </p-footer>
+    </p-panel>
+    <p-panel #pnlUsers *ngIf="showActivateCourses">
+        <p-header>
+            <div class=" p-col-12">
+                <button style="margin-right: 5px;"  appPermission appFunction="Courses" appAction="Approve" pButton type="button" label="Thêm người dùng" icon="fa fa-plus" *ngIf="selectedItems != null" (click)="addActiveCourse()"></button>
+                <button style="margin-right: 5px;"  appPermission appFunction="Courses" appAction="Approve" pButton type="button" label="Xóa người dùng" icon="fa fa-remove" class="p-button-danger" *ngIf="selectedUserItems.length> 0" (click)="removeActiveCourse()"></button>
+            </div>
+        </p-header>
+        <p-table #dt2 [value]="users" [(selection)]="selectedUserItems" [metaKeySelection]="true" [responsive]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 50px;">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th [pSortableColumn]="'userName'">Tài khoản
+                        <p-sortIcon [field]="'userName'"></p-sortIcon>
+                    </th>
+                    <th [pSortableColumn]="'name'">Họ và tên
+                        <p-sortIcon [field]="'name'"></p-sortIcon>
+                    </th>
+                    <th [pSortableColumn]="'email'">Email
+                        <p-sortIcon [field]="'email'"></p-sortIcon>
+                    </th>
+                    <th style="width: 150px" [pSortableColumn]="'dob'">Ngày sinh
+                        <p-sortIcon [field]="'dob'"></p-sortIcon>
+                    </th>
+                    <th style="width: 180px" [pSortableColumn]="'phoneNumber'">Số điện thoại
+                        <p-sortIcon [field]="'phoneNumber'"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-row>
+                <tr [pSelectableRow]="row" [pSelectableRowIndex]="row">
+                    <td style="width: 50px">
+                        <p-tableCheckbox [value]="row"></p-tableCheckbox>
+                    </td>
+                    <td>{{row.userName}}</td>
+                    <td>{{row.name}}</td>
+                    <td>{{row.email}}</td>
+                    <td style="width: 150px">{{row.dob | date:'dd/MM/yyyy'}}</td>
+                    <td style="width: 180px">{{row.phoneNumber}}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                <div style="text-align: left" class="font-weight-bold">
+                    Tổng số người dùng: {{totalUsersRecords}}
+                </div>
+            </ng-template>
+        </p-table>
+        <p-blockUI [target]="pnlUsers" [blocked]="blockedPanelActiveCourses">
+            <p-progressSpinner [style]="{width: '100px', height: '100px', position:'absolute',top:'25%',left:'50%'}" strokeWidth="2" animationDuration=".5s"></p-progressSpinner>
+        </p-blockUI>
+    </p-panel>
+</div>

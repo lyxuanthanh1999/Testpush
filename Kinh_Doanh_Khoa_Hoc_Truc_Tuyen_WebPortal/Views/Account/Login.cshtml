@@ -1,0 +1,82 @@
+﻿@model Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Infrastructure.ViewModels.Systems.LoginRequest
+<!--====== Section 1 ======-->
+<div class="u-s-p-y-30">
+
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="container">
+            <div class="breadcrumb">
+                <div class="breadcrumb__wrap">
+                    <ul class="breadcrumb__list">
+                        <li class="has-separator">
+
+                            <a href="/">Trang chủ</a>
+                        </li>
+                        <li class="is-marked">
+
+                            <a href="#">Đăng nhập</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--====== End - Section 1 ======-->
+<!--====== Section 2 ======-->
+<div class="u-s-p-b-60">
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="container">
+            <div class="row row--center">
+                <div class="col-lg-6 col-md-8 u-s-m-b-30">
+                    <div class="l-f-o">
+                        <div class="l-f-o__pad-box">
+                            <h1 class="u-s-m-b-30" style="text-align: center; align-items: center; font-size: 35px; line-height: 30px; color: black">Đăng nhập</h1>
+                            <form class="l-f-o__form" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                                <div asp-validation-summary="All" class="text-error u-s-m-b-15"></div>
+                                <div class="u-s-m-b-15">
+                                    <label class="gl-label" for="login-email">Tên đăng nhập <sup>*</sup></label>
+                                    <input class="input-text input-text--primary-style" type="text" name="UserName" asp-for="UserName" id="login-email" placeholder="Nhập tên đăng nhập">
+                                    <span asp-validation-for="UserName" class="text-error"></span>
+                                </div>
+                                <div class="u-s-m-b-15">
+                                    <label class="gl-label" for="login-password">Mật khẩu <sup>*</sup></label>
+                                    <input class="input-text input-text--primary-style" name="Password" asp-for="Password" type="password" id="login-password" placeholder="Nhập mật khẩu">
+                                    <span asp-validation-for="Password" class="text-error"></span>
+                                </div>
+                                <div class="u-s-m-b-15">
+
+                                    <!--====== Check Box ======-->
+                                    <div class="check-box">
+
+                                        <input type="checkbox" id="remember-me">
+                                        <div class="check-box__state check-box__state--primary">
+                                            <label class="check-box__label" for="remember-me">Ghi nhớ mật khẩu</label></div>
+                                    </div>
+                                    <!--====== End - Check Box ======-->
+                                </div>
+                                <div class="u-s-m-b-15">
+                                    <span class="gl-text" style="display: initial;margin-right: 2px">Bạn chưa có tài khoản?</span>
+                                    <a class="gl-link" href="/register.html">Tạo tài khoản</a>
+                                </div>
+                                <div class="gl-inline">
+                                    <div class="u-s-m-b-15">
+
+                                        <button class="btn btn--e-transparent-brand-b-2" type="submit">Đăng nhập</button>
+                                    </div>
+                                    <div class="u-s-m-b-15">
+
+                                        <a class="gl-link" href="/reset-password.html">Quên mật khẩu?</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====== End - Section Content ======-->
+</div>
+<!--====== End - Section 2 ======-->

@@ -1,0 +1,256 @@
+﻿@using System.Globalization
+@using Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Infrastructure.Common
+@using Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_WebPortal.Extensions
+@model CourseCatalogViewModel
+@section Scripts{
+
+    <script src="~/assets/js/custom/customListCourses.min.js" asp-append-version="true"></script>
+    <script>
+        var products = new ListCoursesAjax();
+        products.initialize();
+    </script>
+}
+@{
+    var env = "https://localhost:44342";
+}
+@if (Model.Filter != null && Model.Data.TotalRecords == 0)
+{
+    <div class="section__content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 u-s-m-b-30">
+                    <div class="empty">
+                        <div class="empty__wrap">
+
+                            <span class="empty__big-text">Xin lỗi</span>
+
+                            <span class="empty__text-1">Không Tìm Thấy Sản Phẩm Bạn Cần!</span>
+
+                            <span class="empty__text-2">
+                                Kết quả tìm kiếm:
+                                <a href="#">@Model.Filter</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="u-s-p-y-30">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-12">
+                    <div class="shop-w-master">
+                        <h1 class="shop-w-master__heading u-s-m-b-30">
+                            <i class="fas fa-filter u-s-m-r-8"></i>
+                            <span>Lọc</span>
+                        </h1>
+                        <div class="shop-w-master__sidebar sidebar--bg-snow">
+                            <div class="u-s-m-b-30">
+                                <div class="shop-w">
+                                    <div class="shop-w__intro-wrap">
+                                        <h1 class="shop-w__h">Danh Mục</h1>
+                                        <span class="fas fa-minus shop-w__toggle" data-target="#s-category" data-toggle="collapse"></span>
+                                    </div>
+                                    <div class="shop-w__wrap collapse show" id="s-category">
+                                        <ul class="shop-w__category-list gl-scroll">
+                                            @foreach (var modelCategoryViewModel in @Model.CategoryViewModels)
+                                            {
+                                                if (modelCategoryViewModel.CategoryViewModels.Any())
+                                                {
+                                                    <li class="has-list">
+
+                                                        <a href="/courses.html?categoryId=@modelCategoryViewModel.Id">@modelCategoryViewModel.Name</a>
+
+                                                        <span class="category-list__text u-s-m-l-6">(@modelCategoryViewModel.CategoryViewModels.Count)</span>
+
+                                                        <span class="js-shop-category-span fas fa-plus u-s-m-l-6"></span>
+                                                        <ul>
+                                                            @foreach (var categoryViewModel in modelCategoryViewModel.CategoryViewModels)
+                                                            {
+                                                                <li>
+                                                                    <a href="/courses.html?categoryId=@categoryViewModel.Id">@categoryViewModel.Name</a>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li>
+                                                        <a href="/courses.html?categoryId=@modelCategoryViewModel.Id">@modelCategoryViewModel.Name</a>
+                                                        <span class="category-list__text u-s-m-l-6">(@modelCategoryViewModel.CategoryViewModels.Count)</span>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="u-s-m-b-30">
+                                <div class="shop-w">
+                                    <div class="shop-w__intro-wrap">
+                                        <h1 class="shop-w__h">Giá</h1>
+
+                                        <span class="fas fa-minus shop-w__toggle" data-target="#s-price" data-toggle="collapse"></span>
+                                    </div>
+                                    <div class="shop-w__wrap collapse show" id="s-price">
+                                        <form class="shop-w__form-p">
+                                            <div class="shop-w__form-p-wrap">
+                                                <div>
+                                                    <label for="price-min"></label>
+                                                    <input class="input-text input-text--primary-style" type="text" id="price-min" name="priceMin" value="@Model.PriceMin" placeholder="Min" onkeyup="var result = document.getElementById('price-min');var vl = result.value;if (vl < 0 || isNaN(vl)) { result.value = vl.replace(/[^\d]/g, ''); }" />
+                                                </div>
+                                                <div>
+                                                    <label for="price-max"></label>
+                                                    <input class="input-text input-text--primary-style" type="text" id="price-max" name="priceMax" value="@Model.PriceMax" placeholder="Max" onkeyup="var result = document.getElementById('price-max');var vl = result.value;console.log(vl);if (vl < 0 || isNaN(vl)) { result.value = vl.replace(/[^\d]/g, ''); }" />
+                                                </div>
+                                                <div>
+                                                    <button class="btn btn--icon fas fa-angle-right btn--e-transparent-platinum-b-2" id="sortPrice" type="button"></button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-12">
+                    @if (Model.Data.TotalRecords > 0)
+                    {
+                        <div class="shop-p">
+                            <div class="shop-p__toolbar u-s-m-b-30">
+                                @if (Model.Filter != null)
+                                {
+                                    <div class="shop-p__meta-wrap u-s-m-b-60">
+
+                                        <span class="shop-p__meta-text-1">Tìm Thấy @Model.Data.TotalRecords Khóa Học</span>
+                                        <div class="shop-p__meta-text-2">
+
+                                            <span>Related Searches:</span>
+                                            <a class="gl-tag btn--e-brand-shadow" id="searchFilter" href="#">@Model.Filter</a>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="shop-p__tool-style">
+                                    <div class="tool-style__group u-s-m-b-8">
+
+                                        <span class="js-shop-grid-target is-active">Lưới</span>
+
+                                        <span class="js-shop-list-target">Danh sách</span>
+                                    </div>
+                                    <form>
+                                        <div class="tool-style__form-wrap">
+
+                                            <div class="u-s-m-b-8">
+                                                <select name="pageSize" class="selectWrap" id="ddlPageSize" asp-for="PageSize" asp-items="Model.PageSizes"></select>
+                                            </div>
+                                            <div class="u-s-m-b-8">
+                                                <select name="sortBy" class="selectWrap" id="ddlSortType" asp-for="SortType" asp-items="Model.SortTypes"></select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="shop-p__collection">
+                                <div class="row is-grid-active">
+                                    @foreach (var item in @Model.Data.Items)
+                                    {
+                                        var img = env + item.Image;
+                                        <div class="col-lg-4 col-md-6 col-sm-6">
+                                            <div class="product-m">
+                                                <div class="product-m__thumb">
+
+                                                    <a class="aspect aspect--bg-grey aspect--square u-d-block" href="/courses-@(item.Id).html">
+
+                                                        <img class="aspect__img" src="@img" alt="">
+                                                    </a>
+                                                    @if (User.Identity.IsAuthenticated)
+                                                    {
+                                                        if (Model.ActiveCoursesViewModels.All(x => x.CourseId != item.Id))
+                                                        {
+                                                            <div class="product-m__add-cart">
+                                                                <a class="btn--e-brand add-product-in-cart" data-modal="modal" data-modal-id="#add-to-cart" data-status="@item.Status" data-id="@item.Id">Thêm vào giỏ</a>
+                                                                @*<a class="btn--e-brand" data-modal="modal" data-modal-id="#add-to-cart">Add to Cart</a>*@
+                                                            </div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="product-m__add-cart">
+                                                            <a class="btn--e-brand add-product-in-cart" data-modal="modal" data-modal-id="#add-to-cart" data-status="@item.Status" data-id="@item.Id">Thêm vào giỏ</a>
+                                                            @*<a class="btn--e-brand" data-modal="modal" data-modal-id="#add-to-cart">Add to Cart</a>*@
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <div class="product-m__content">
+                                                    <div class="product-m__category">
+                                                        <a href="/courses.html?categoryId=@item.CategoryId">@item.CategoryName</a>
+                                                    </div>
+                                                    <div class="product-m__name">
+                                                        <a href="/courses-@(item.Id).html">@item.Name</a>
+                                                    </div>
+                                                    <div class="product-m__price">
+                                                        @if (item.DiscountPercent > 0)
+                                                        {
+                                                            var promotionPrice = item.Price - (item.Price * item.DiscountPercent / 100);
+                                                            @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", @promotionPrice)
+                                                            <span class="product-m__discount">
+                                                                @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", @item.Price)
+                                                            </span>
+                                                        }
+                                                        else if (item.DiscountAmount > 0)
+                                                        {
+                                                            @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", @item.DiscountAmount)
+                                                            <span class="product-m__discount">
+                                                                @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", @item.Price)
+                                                            </span>
+
+                                                        }
+                                                        else
+                                                        {
+                                                            @string.Format(CultureInfo.GetCultureInfo("vi-VN"), "{0:C0}", @item.Price)
+                                                        }
+                                                    </div>
+                                                    <div class="product-m__hover">
+                                                        <div class="product-m__preview-description">
+
+                                                            <span>
+                                                                @item.Description
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="u-s-p-y-60">
+
+                                <!--====== Pagination ======-->
+                                @await Component.InvokeAsync("Pager", Model.Data)
+                                <!--====== End - Pagination ======-->
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="empty">
+                            <div class="empty__wrap">
+
+                                <span class="empty__big-text">Xin lỗi</span>
+
+                                <span class="empty__text-1">Không Tìm Thấy Sản Phẩm!</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}

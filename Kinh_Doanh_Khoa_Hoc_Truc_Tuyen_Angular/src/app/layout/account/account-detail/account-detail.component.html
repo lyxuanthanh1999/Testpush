@@ -1,0 +1,97 @@
+<div class="animated fadeIn">
+    <p-panel #pnl>
+        <p-header>
+            <div class="p-grid">
+                <div class="p-col-12">
+                    <h3>{{dialogTitle}}</h3>
+                </div>
+            </div>
+        </p-header>
+        <form class="form-horizontal form-label-left" novalidate [formGroup]="entityForm" (ngSubmit)="saveChange()">
+            <div class="p-grid-pad p-fluid p-grid-responsive">
+                <div style="align-items: center;" class="p-field p-grid">
+                    <div class="p-col-2">
+                        <span class="required">Tài khoản:</span>
+                    </div>
+                    <div class="p-col-6">
+                        <input type="text" pInputText [pKeyFilter]="noSpecial" formControlName="userName">
+                    </div>
+                    <div class="p-col-4">
+                        <app-validation-message [entityForm]="entityForm" fieldName="userName" [validationMessages]="validation_messages"></app-validation-message>
+                    </div>
+                </div>
+                <div style="align-items: center;" class="p-field p-grid">
+                    <div class="p-col-2">
+                        <span class="required">Họ và tên:</span>
+                    </div>
+                    <div class="p-col-6">
+                        <input type="text" pInputText [pKeyFilter]="noSpecial" formControlName="name">
+                    </div>
+                    <div class="p-col-4">
+                        <app-validation-message [entityForm]="entityForm" fieldName="name" [validationMessages]="validation_messages"></app-validation-message>
+                    </div>
+                </div>
+                <div style="align-items: center;" class="p-field p-grid">
+                    <div class="p-col-2">
+                        <span class="required">Avatar:</span>
+                    </div>
+                    <div class="p-col-6">
+                        <p-fileUpload *ngIf="this.fileAvatarPath === ''" [showUploadButton]="false" (onRemove)="removeAvatar($event)" (onSelect)="selectAvatar($event)" [showCancelButton]="false" accept="image/*" maxFileSize="1000000000">
+                        </p-fileUpload>
+                        <ul style="padding: 0; margin: 0;" *ngIf="this.fileAvatarPath !== ''">
+                            <li style="list-style: none; display: flex; align-items: center;">
+                                <a href="{{backendApiUrl + fileAvatarPath}}"><img style="width: 60px;" src="{{backendApiUrl + fileAvatarPath}}" alt="anh dai dien"> {{fileAvatarName}}</a>
+                                <button icon="pi pi-upload" pButton type="button" (click)="changeAvatar()" class="p-button-help p-ml-2"></button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="p-col-4">
+
+                    </div>
+                </div>
+                <div style="align-items: center;" class="p-field p-grid">
+                    <div class="p-col-2">
+                        <span class="required">Tiểu sử:</span>
+                    </div>
+                    <div class="p-col-6">
+                        <input type="text" pInputText [pKeyFilter]="noSpecial" formControlName="biography">
+                    </div>
+                </div>
+                <div style="align-items: center;" class="p-field p-grid">
+                    <div class="p-col-2">
+                        <span>Ngày sinh:</span>
+                    </div>
+                    <div class="p-col-6">
+                        <p-calendar formControlName="dob" dateFormat="dd/mm/yy" [showIcon]="true" [locale]="vi" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" showButtonBar="true">
+                        </p-calendar>
+                    </div>
+                </div>
+                <div style="align-items: center;" class="p-field p-grid">
+                    <div class="p-col-2">
+                        <span class="required">Email:</span>
+                    </div>
+                    <div class="p-col-6">
+                        <input type="text" pInputText pKeyFilter="email" formControlName="email">
+                    </div>
+                    <div class="p-col-4">
+                        <app-validation-message [entityForm]="entityForm" fieldName="email" [validationMessages]="validation_messages"></app-validation-message>
+                    </div>
+                </div>
+                <div style="align-items: center;" class="p-field p-grid">
+                    <div class="p-col-2">
+                        <span>Điện thoại:</span>
+                    </div>
+                    <div class="p-col-6">
+                        <input type="text" pInputText pKeyFilter="int" formControlName="phoneNumber">
+                    </div>
+                </div>
+            </div>
+        </form>
+        <p-footer>
+            <button pButton type="button" style="margin-right: 5px;" [disabled]="!entityForm.valid" class="p-button-success" label="Lưu lại" icon="fa fa-floppy-o" (click)="saveChange()"></button>
+            <p-blockUI [target]="pnl" [blocked]="blockedPanel">
+                <p-progressSpinner [style]="{width: '100px', height: '100px', position:'absolute',top:'25%',left:'50%'}" strokeWidth="2" animationDuration=".5s"></p-progressSpinner>
+            </p-blockUI>
+        </p-footer>
+    </p-panel>
+</div>

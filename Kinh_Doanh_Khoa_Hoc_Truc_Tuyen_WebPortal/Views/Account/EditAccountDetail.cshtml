@@ -1,0 +1,112 @@
+﻿@model AccountDetailViewModel
+@{
+    var env = "https://localhost:44342";
+    var imageUser = env + Model.Image;
+}
+@section Scripts {
+    <script src="~/assets/js/custom/customProfile.min.js" asp-append-version="true"></script>
+    <script>
+        var profile = new ProfileJquery();
+        profile.initialize();
+    </script>
+}
+<!--====== Section 1 ======-->
+<div class="u-s-p-y-30">
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="container">
+            <div class="breadcrumb">
+                <div class="breadcrumb__wrap">
+                    <ul class="breadcrumb__list">
+                        <li class="has-separator">
+                            <a href="/">Trang chủ</a>
+                        </li>
+                        <li class="has-separator">
+                            <a href="/my-profile.html">Thông tin cá nhân</a>
+                        </li>
+                        <li class="is-marked">
+                            <a href="#">Thay đổi thông tin</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--====== End - Section 1 ======-->
+<!--====== Section 2 ======-->
+<div class="u-s-p-b-30">
+
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="dash">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-12">
+
+                        <!--====== Dashboard Features ======-->
+                        @await Component.InvokeAsync("DashboardFeatures", Model.NameDash)
+                        <!--====== End - Dashboard Features ======-->
+                    </div>
+                    <div class="col-lg-9 col-md-12">
+                        <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30">
+                            <div class="dash__pad-2">
+                                <h1 class="dash__h1 u-s-m-b-30"><a href="/my-profile.html"><i class="fas fa-chevron-circle-left" style="line-height: 1;color: #fa4400;font-size: 18px;margin-right: 5px;"></i></a>Thay đổi thông tin cá nhân</h1>
+                                <div class="row">
+                                    <div class="col-lg-3 u-s-m-b-30">
+                                        <form class="dash-edit-p" id="formFile" action="/my-edit-avatar.html" method="post"  enctype="multipart/form-data">
+                                        <img class="dash__text u-s-m-b-30" id="imgAvatar" style="width: 170px; height: 150px; background-image: none; background-repeat: no-repeat; background-position: center center; background-size: cover;" src="@imageUser" alt="Ảnh đại diện" />
+                                        <input accept="image/*" id="fileAvatar" name="file" type="file" hidden />
+                                        <button class="btn btn--e-brand-b-2 u-s-m-b-30" id="btnAvatar" style="border-radius: 6px;padding: 16px 0" type="button">Đổi ảnh</button>
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-9 u-s-m-b-30">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <form class="dash-edit-p" method="post">
+                                                    <div class="gl-inline">
+                                                        <div class="u-s-m-b-30">
+                                                            <input asp-for="@Model.AccountViewModel.Id" type="hidden" />
+                                                            <label class="gl-label" for="reg-username">Tên đăng nhập <sup>*</sup></label>
+                                                            <input readonly class="input-text input-text--primary-style" type="text" asp-for="@Model.AccountViewModel.UserName" id="reg-username" placeholder="Nhập tài khoản">
+                                                        </div>
+                                                        <div class="u-s-m-b-30">
+                                                            <label class="gl-label" for="reg-fname">Họ và tên <sup>*</sup></label>
+                                                            <input class="input-text input-text--primary-style" type="text" asp-for="@Model.AccountViewModel.Name" id="reg-fname" placeholder="Nhập họ và tên">
+                                                            <span asp-validation-for="@Model.AccountViewModel.Name" class="text-error"></span>
+                                                        </div>
+                                                        <div class="u-s-m-b-30">
+
+                                                            <label class="gl-label" for="reg-lname">Ngày sinh <sup>*</sup></label>
+                                                            <input class="input-text input-text--primary-style" type="date" asp-for="@Model.AccountViewModel.Dob" id="reg-date" placeholder="Nhập ngày sinh">
+                                                            <span asp-validation-for="@Model.AccountViewModel.Dob" class="text-error"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="gl-inline">
+                                                        <div class="u-s-m-b-30">
+                                                            <h2 class="dash__h2 u-s-m-b-8">Email</h2>
+                                                            <input class="input-text input-text--primary-style" type="email" asp-for="@Model.AccountViewModel.Email" id="reg-email" placeholder="Nhập Email">
+                                                            <span asp-validation-for="@Model.AccountViewModel.Email" class="text-error"></span>
+                                                        </div>
+                                                        <div class="u-s-m-b-30">
+                                                            <h2 class="dash__h2 u-s-m-b-8">Điện thoại</h2>
+                                                            <input class="input-text input-text--primary-style" type="number" asp-for="@Model.AccountViewModel.PhoneNumber" id="reg-phone" placeholder="Nhập số điện thoại">
+                                                            <span asp-validation-for="@Model.AccountViewModel.PhoneNumber" class="text-error"></span>
+                                                        </div>
+                                                    </div>
+                                                    <button class="btn btn--e-brand-b-2" type="submit">Lưu</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====== End - Section Content ======-->
+</div>
+<!--====== End - Section 2 ======-->

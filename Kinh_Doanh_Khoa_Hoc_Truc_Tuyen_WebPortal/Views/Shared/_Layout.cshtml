@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="~/assets/images/favicon.png" rel="shortcut icon">
+    <title>Kinh Doanh Khóa Học Online</title>
+
+    <!--====== Google Font ======-->
+    <link href="~/font/font-Open-Sans.css" rel="stylesheet" />
+    <!--====== JQuery Ui ======-->
+    <link href="~/lib/jqueryui/jquery-ui.min.css" rel="stylesheet" />
+    <!--====== Notify Css ======-->
+    <link href="~/lib/notify/styles/metro/notify-metro.css" rel="stylesheet" />
+
+    <!--====== Vendor Css ======-->
+    <link rel="stylesheet" href="~/assets/css/vendor.css">
+
+    <!--====== Utility-Spacing ======-->
+    <link rel="stylesheet" href="~/assets/css/utility.css">
+
+    <!--====== App ======-->
+    <link rel="stylesheet" href="~/assets/css/app.css">
+    @await RenderSectionAsync("CssLinks", required: false)
+    <!-- Load Facebook SDK for JavaScript -->
+</head>
+
+<body class="config">
+
+    <!--====== Main Pre Loader ======-->
+    <partial name="_PreloaderPartial" />
+    <!--====== End - Main Pre Loader ======-->
+    <!--====== Main App ======-->
+    <div id="app">
+
+        <!--====== Main Header ======-->
+        @await Component.InvokeAsync("SideBar")
+        <!--====== End - Main Header ======-->
+        <!--====== App Content ======-->
+        <div class="app-content">
+            @RenderBody()
+        </div>
+        <!--====== End - App Content ======-->
+        <!--====== Main Footer ======-->
+        <partial name="_FooterPartial" />
+        <!--====== End - Main Footer ======-->
+        <!--====== Modal Section ======-->
+        <!--====== Quick Look Modal ======-->
+        <!--====== End - Quick Look Modal ======-->
+        <!--====== Add to Cart Modal ======-->
+        <div class="modal fade" id="add-to-cart">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content modal-radius modal-shadow">
+                    <button class="btn dismiss-button fas fa-times" type="button" data-dismiss="modal"></button>
+                    <div class="modal-body" id="modal-add-to-cart">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script id="template-modal-cart" type="x-tmpl-mustache">
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <div class="success u-s-m-b-30">
+                        <div class="success__text-wrap">
+                            <i class="fas fa-check"></i>
+
+                            <span>Thêm khóa học thành công!</span>
+                        </div>
+                        <div class="success__img-wrap">
+
+                            <img class="u-img-fluid" style="height: 100%" src="{{modalCartImage}}" alt="">
+                        </div>
+                        <div class="success__info-wrap">
+
+                            <span class="success__name">{{modalCartName}}</span>
+
+                            <span class="success__quantity">Giảng Viên: {{modalOwnerUser}}</span>
+                            {{#checkPromotion}}
+                            <del class="success__price">{{modalCartPrice}}</del>
+                            {{/checkPromotion}}
+                            <span class="success__price">{{modalCartPromotion}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="s-option">
+                        <span class="s-option__text">Đã thêm khóa học vào giỏ hàng</span>
+                        <div class="s-option__link-box">
+
+                            <a class="s-option__link btn--e-white-brand-shadow" data-dismiss="modal">Tiếp tục mua hàng</a>
+
+                            <a class="s-option__link btn--e-white-brand-shadow" href="/cart.html">Xem giỏ hàng</a>
+
+                            <a class="s-option__link btn--e-brand-shadow" href="/checkout.html">Tiến hành đặt mua</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <!--====== End - Add to Cart Modal ======-->
+        <!--====== End - Modal Section ======-->
+    </div>
+    <!--====== End - Main App ======-->
+    <!--====== Google Analytics: change UA-XXXXX-Y to be your site's ID ======-->
+    <script>
+        window.ga = function () {
+            ga.q.push(arguments);
+        };
+        ga.q = [];
+        ga.l = +new Date;
+        ga('create', 'UA-XXXXX-Y', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script src="~/lib/google-analytics/analytics.js" async defer></script>
+    <!--====== Jquery ======-->
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validate/additional-methods.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/jquery-validate/localization/messages_vi.min.js"></script>
+
+    <!--====== Vendor Js ======-->
+    <script src="~/assets/js/vendor.js"></script>
+
+    <!--====== jQuery Shopnav plugin ======-->
+    <script src="~/assets/js/jquery.shopnav.js"></script>
+
+    <!--====== App ======-->
+    <script src="~/assets/js/app.js"></script>
+
+    <!--====== SignalR ======-->
+    <script src="~/lib/microsoft-signalr/signalr.min.js"></script>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <script src="~/assets/js/custom/customSignalR.min.js" asp-append-version="true"></script>
+    }
+    <!--====== Moment Js ======-->
+    <script src="~/lib/moment.js/moment.min.js"></script>
+    <script src="~/lib/moment.js/locale/vi.min.js"></script>
+
+    <!--====== Notify Js ======-->
+    <script src="~/lib/notify/notify.min.js"></script>
+    <script src="~/lib/notify/styles/metro/notify-metro.min.js"></script>
+
+    <!--====== BootBox ======-->
+    <script src="~/lib/bootbox.js/bootbox.min.js"></script>
+    <script src="~/assets/js/site.js"></script>
+
+    <!--Mustache-->
+    <script src="~/lib/mustache.js/mustache.min.js"></script>
+
+    <!--====== NoScript ======-->
+    <noscript>
+        <div class="app-setting">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="app-setting__wrap">
+                            <h1 class="app-setting__h1">JavaScript is disabled in your browser.</h1>
+
+                            <span class="app-setting__text">Please enable JavaScript in your browser or upgrade to a JavaScript-capable browser.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </noscript>
+    <script src="~/lib/jqueryui/jquery-ui.min.js"></script>
+
+    <!--Header Shop Cart-->
+    <script src="~/assets/js/custom/customBase.min.js"></script>
+    <script>
+        var baseObj = new BaseAjax();
+        baseObj.initialize();
+    </script>
+
+    <!--====== Custom Script ======-->
+    @await RenderSectionAsync("CommonScripts", required: false)
+    @await RenderSectionAsync("Scripts", required: false)
+    @*<div class="powr-chat" id="6cc7942f_1610378590"></div>
+        <script src="https://www.powr.io/powr.js?platform=aspdotnet"></script>*@
+    <!-- Start of  Zendesk Widget script -->
+<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=6a2d619c-5838-4ba8-a00c-cf7f0c9f4dec"></script>
+    <!-- End of  Zendesk Widget script -->
+    <!-- Start of REVE Chat Script-->
+    <!--<script type='text/javascript'>
+        window.$_REVECHAT_API || (function(d, w) { var r = $_REVECHAT_API = function(c) {r._.push(c);}; w.__revechat_account='2252923';w.__revechat_version=2;
+            r._= []; var rc = d.createElement('script'); rc.type = 'text/javascript'; rc.async = true; rc.setAttribute('charset', 'utf-8');
+            rc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'static.revechat.com/widget/scripts/new-livechat.js?'+new Date().getTime();
+            var s = d.getElementsByTagName('script')[0]; s.parentNode.insertBefore(rc, s);
+        })(document, window);
+    </script>-->
+    <!-- End of REVE Chat Script -->
+    <!-- Start of LiveChat (www.livechatinc.com) code -->
+    @*<script>
+        window.__lc = window.__lc || {};
+        window.__lc.license = 12503349;
+        ; (function (n, t, c) { function i(n) { return e._h ? e._h.apply(null, n) : e._q.push(n) } var e = { _q: [], _h: null, _v: "2.0", on: function () { i(["on", c.call(arguments)]) }, once: function () { i(["once", c.call(arguments)]) }, off: function () { i(["off", c.call(arguments)]) }, get: function () { if (!e._h) throw new Error("[LiveChatWidget] You can't use getters before load."); return i(["get", c.call(arguments)]) }, call: function () { i(["call", c.call(arguments)]) }, init: function () { var n = t.createElement("script"); n.async = !0, n.type = "text/javascript", n.src = "https://cdn.livechatinc.com/tracking.js", t.head.appendChild(n) } }; !n.__lc.asyncInit && e.init(), n.LiveChatWidget = n.LiveChatWidget || e }(window, document, [].slice))
+    </script>
+    <noscript><a href="https://www.livechatinc.com/chat-with/12503349/" rel="nofollow">Chat with us</a>, powered by <a href="https://www.livechatinc.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a></noscript>*@
+    <!-- End of LiveChat code -->
+<!-- Load Facebook SDK for JavaScript -->
+<!--<div id="fb-root"></div>
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            xfbml            : true,
+            version          : 'v9.0'
+        });
+    };
+
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>-->
+
+<!-- Your Chat Plugin code -->
+<!--<div class="fb-customerchat"
+     attribution=setup_tool
+     page_id="106940628026418"
+     theme_color="#20cef5"
+     logged_in_greeting="Xin chào! mình có thể giúp gì cho bạn?"
+     logged_out_greeting="Xin chào! mình có thể giúp gì cho bạn?">
+</div>-->
+</body>
+</html>

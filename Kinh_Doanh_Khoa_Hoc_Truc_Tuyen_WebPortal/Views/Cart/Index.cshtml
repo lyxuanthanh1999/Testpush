@@ -1,0 +1,180 @@
+﻿@using Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_WebPortal.Extensions
+@using Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_Infrastructure.Common
+@inject IHttpContextAccessor HttpContextAccessor
+@section Scripts{
+    <script src="~/assets/js/custom/customCart.min.js" asp-append-version="true"></script>
+    <script>
+        var cartObj = new CartAjax();
+        cartObj.initialize();
+    </script>
+}
+@{
+    var session = HttpContextAccessor.HttpContext.Session.Get<List<CartViewModel>>(SystemConstants.CartSession) ?? new List<CartViewModel>();
+
+}
+@if (session.Count > 0)
+{
+    <!--====== Section 1 ======-->
+    <div class="u-s-p-y-30">
+
+        <!--====== Section Content ======-->
+        <div class="section__content">
+            <div class="container">
+                <div class="breadcrumb">
+                    <div class="breadcrumb__wrap">
+                        <ul class="breadcrumb__list">
+                            <li class="has-separator">
+
+                                <a href="/">Trang chủ</a>
+                            </li>
+                            <li class="is-marked">
+
+                                <a href="#">Giỏ hàng</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====== End - Section 1 ======-->
+    <!--====== Section 2 ======-->
+    <div class="u-s-p-b-30">
+
+        <!--====== Section Intro ======-->
+        <div class="section__intro u-s-m-b-30">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section__text-wrap">
+                            <h1 class="section__heading u-c-secondary">Giỏ hàng</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--====== End - Section Intro ======-->
+        <!--====== Section Content ======-->
+        <div class="section__content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="route-box">
+                            <div class="route-box__g1">
+
+                                <a class="route-box__link" href="/courses.html">
+                                    <i class="fas fa-long-arrow-alt-left"></i>
+
+                                    <span>Tiếp tục mua hàng</span>
+                                </a>
+                            </div>
+                            <div class="route-box__g2">
+                                <a class="route-box__link" id="aClearAll" href="#">
+                                    <i class="fas fa-trash"></i>
+                                    <span>Xóa tất cả sản phẩm</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="table-responsive">
+                            <table class="table-p">
+                                <thead>
+                                    <tr>
+                                        <th class="u-s-p-y-15">Tên khóa học</th>
+                                        <th class="u-s-p-y-15">Giá</th>
+                                        <th class="u-s-p-y-15">Giá khuyến mãi</th>
+
+                                        <th class="u-s-p-y-15">Hành động</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-cart-content"></tbody>
+                                <tfoot>
+                                    <tr style="font-size: 16px; font-weight: 700; color: #ff4500;text-align: center">
+                                        <td><span>Tổng Cộng</span></td>
+                                        <td><span id="totalAmountCart">0</span></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 u-s-m-b-30">
+                        <button class="btn btn--e-brand-b-2" onclick="location.href='checkout.html'" type="button">Tiến hành đặt mua</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--====== End - Section Content ======-->
+    </div>
+    <!--====== End - Section 2 ======-->
+
+    <script id="template-cart" type="x-tmpl-mustache">
+<!--====== Row ======-->
+<tr>
+    <td>
+        <div class="table-p__box">
+            <div class="table-p__img-wrap">
+
+                <img class="u-img-fluid" style="height: 100%" src="{{courseImg}}" alt="">
+            </div>
+            <div class="table-p__info">
+
+                <span class="table-p__name">
+
+                    <a href="{{urlCourseId}}">{{courseName}}</a>
+                </span>
+
+                <span class="table-p__category">
+
+                    <a href="{{urlCategoryId}}">{{categoryName}}</a>
+                </span>
+                <span class="table-p__category">
+                    {{ownerUser}}
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <span class="table-p__price">{{coursePrice}}</span>
+    </td>
+        <td>
+        <span class="table-p__price">{{coursePromotionPrice}}</span>
+    </td>
+    <td>
+        <div class="table-p__del-wrap">
+
+            <a class="far fa-trash-alt table-p__delete-link a-delete" data-id="{{courseId}}" href="#"></a>
+        </div>
+    </td>
+</tr>
+<!--====== End - Row ======-->
+    </script>
+}
+else
+{
+    <!--====== Section 1 ======-->
+    <div class="u-s-p-y-30">
+
+        <!--====== Section Content ======-->
+        <div class="section__content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 u-s-m-b-30">
+                        <div class="empty">
+                            <div class="empty__wrap">
+
+                                <span class="empty__big-text">Rỗng</span>
+
+                                <span class="empty__text-1">Không có sản phẩm nào trong giỏ hàng.</span>
+
+                                <a class="empty__redirect-link btn--e-brand" href="/courses.html">Tiếp tục mua hàng</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--====== End - Section Content ======-->
+    </div>
+    <!--====== End - Section 1 ======-->
+}

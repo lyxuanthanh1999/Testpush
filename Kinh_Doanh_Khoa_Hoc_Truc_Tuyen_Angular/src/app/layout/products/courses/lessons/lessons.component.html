@@ -1,0 +1,78 @@
+<div class="animated fadeIn">
+    <p-panel #pnl>
+        <p-header style="width: 100%">
+            <div class="p-grid">
+                <div class="p-col-12">
+                    <h3>Danh sách bài học</h3>
+                </div>
+                <div class="p-col-7">
+                    <button style="margin-right: 5px;" apPermission appFunction="Courses" appAction="View" pButton type="button" label="Back" icon="fa fa-angle-left" class="p-button-success" (click)="Back()"></button>
+                    <button style="margin-right: 5px;" apPermission appFunction="Courses" appAction="Create" pButton type="button" label="Thêm" icon="fa fa-plus" (click)="showAddModal()"></button>
+                    <button style="margin-right: 5px;" appPermission appFunction="Courses" appAction="Update" pButton type="button" label="Sửa" icon="fa fa-edit" class="p-button-warning" *ngIf="selectedItems.length== 1" (click)="showEditModal()"></button>
+                    <button style="margin-right: 5px;" appPermission appFunction="Courses" appAction="Delete" pButton type="button" label="Xóa" icon="fa fa-trash" class="p-button-danger" *ngIf="selectedItems.length > 0" (click)="deleteItems()"></button>
+                    <button style="margin-right: 5px;" appPermission appFunction="Courses" appAction="View" pButton type="button" label="Bình Luận" icon="fa fa-users" class="p-button-help" *ngIf="selectedItems.length == 1" (click)="viewComment()"></button>
+                    <button style="margin-right: 5px;" appPermission appFunction="Courses" appAction="Approve" pButton type="button" label="Duyệt" icon="fa fa-check" class="p-button-success" *ngIf="role !=='Teacher' && selectedItems.length > 0 && checkChanged(selectedItems) == -1"
+                        (click)="approve()"></button>
+
+                </div>
+                <div class="p-col-5">
+                    <input style="width: 100%;" pInputText (keyup.enter)="loadData()" [(ngModel)]="keyword" placeholder="Nhập từ khóa..." type="text">
+                </div>
+            </div>
+        </p-header>
+
+        <p-table #dt [value]="items" [(selection)]="selectedItems" [metaKeySelection]="true" [responsive]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="p-text-center" style="width: 50px">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th class="p-text-center" [pSortableColumn]="'name'">Tên bài học
+                        <p-sortIcon [field]="'name'"></p-sortIcon>
+                    </th>
+                    <th class="p-text-center" [pSortableColumn]="'videoPath'">Video
+                        <p-sortIcon [field]="'videoPath'"></p-sortIcon>
+                    </th>
+                    <th class="p-text-center" [pSortableColumn]="'attachment'">Tệp đính kèm
+                        <p-sortIcon [field]="'attachment'"></p-sortIcon>
+                    </th>
+                    <th style="width: 180px" class="p-text-center" [pSortableColumn]="'sortOrder'">Thứ tự
+                        <p-sortIcon [field]="'sortOrder'"></p-sortIcon>
+                    </th>
+                    <th class="p-text-center" [pSortableColumn]="'courseName'">Tên khóa học
+                        <p-sortIcon [field]="'courseName'"></p-sortIcon>
+                    </th>
+                    <th class="p-text-center" style="width: 180px" [pSortableColumn]="'status'">Trạng thái
+                        <p-sortIcon [field]="'status'"></p-sortIcon>
+                    </th>
+                </tr>
+
+            </ng-template>
+            <ng-template pTemplate="body" let-row>
+                <tr [pSelectableRow]="row" [pSelectableRowIndex]="row">
+                    <td style="width: 50px">
+                        <p-tableCheckbox [value]="row"></p-tableCheckbox>
+                    </td>
+                    <td>{{row.name | formatData: 20}}</td>
+                    <td>{{row.videoPath | convertPath: '/' | formatData: 20}}</td>
+                    <td>{{row.attachment | convertPath: '/' | formatData: 20}}</td>
+                    <td style="width: 180px">{{row.sortOrder}}</td>
+                    <td>{{row.courseName | formatData: 20}}</td>
+                    <td style="width: 180px">{{row.status | formatStatusBase}}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                <div style="text-align: left" class="font-weight-bold">
+                    Tổng số bản ghi: {{totalRecords | number}}
+                </div>
+            </ng-template>
+        </p-table>
+        <p-footer>
+            <p-paginator dropdownAppendTo="body" [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="pageChanged($event)" [rowsPerPageOptions]="[5,10,20,100]"></p-paginator>
+            <p-blockUI [target]="pnl" [blocked]="blockedPanel">
+                <p-progressSpinner [style]="{width: '100px', height: '100px', position: 'absolute',top: '25%',left: '50%'}" strokeWidth="2" animationDuration=".5s"></p-progressSpinner>
+            </p-blockUI>
+        </p-footer>
+    </p-panel>
+
+</div>

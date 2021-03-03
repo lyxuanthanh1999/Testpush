@@ -1,0 +1,59 @@
+﻿@model ActiveCourseViewModel
+<!--====== Section 1 ======-->
+<div class="u-s-p-y-30">
+
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="container">
+            <div class="breadcrumb">
+                <div class="breadcrumb__wrap">
+                    <ul class="breadcrumb__list">
+                        <li class="has-separator">
+                            <a href="/">Trang chủ</a>
+                        </li>
+                        <li class="is-marked">
+                            <a href="#">Kích hoạt khóa họce</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--====== End - Section 1 ======-->
+<!--====== Section 2 ======-->
+<div class="u-s-p-b-30">
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="dash">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-12">
+                        <!--====== Dashboard Features ======-->
+                        @await Component.InvokeAsync("DashboardFeatures", Model.NameDash)
+                        <!--====== End - Dashboard Features ======-->
+                    </div>
+                    <div class="col-lg-9 col-md-12">
+                        <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white">
+                            <div class="dash__pad-2">
+                                <h1 class="dash__h1 u-s-m-b-14">Kích hoạt khóa học</h1>
+                                <span class="dash__text u-s-m-b-30">Bạn hãy nhập mã kích hoạt ở dưới để hệ thống kích hoạt khóa học cho bạn.</span>
+                                <form class="dash-track-order" method="post">
+                                    <div asp-validation-summary="All" class="text-error u-s-m-b-15"></div>
+                                    <div class="u-s-m-b-30">
+                                        <label class="gl-label" for="order-id">Active Course <sup>*</sup></label>
+                                        <input class="input-text input-text--primary-style" type="text" asp-for="@Model.Code" style="align-items: center; text-align: center;font-size: 16px" id="order-id" placeholder="Nhập mã kích hoạt">
+                                        <span asp-validation-for="@Model.Code" class="text-error"></span>
+                                    </div>
+                                    <button class="btn btn--e-brand-b-2" type="submit">Kích Hoạt</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====== End - Section Content ======-->
+</div>
+<!--====== End - Section 2 ======-->

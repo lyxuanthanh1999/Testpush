@@ -1,0 +1,94 @@
+﻿@model AccountDetailViewModel
+@{
+    var env = "https://localhost:44342";
+    var imageUser = env + Model.Image;
+}
+<!--====== Section 1 ======-->
+<div class="u-s-p-y-30">
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="container">
+            <div class="breadcrumb">
+                <div class="breadcrumb__wrap">
+                    <ul class="breadcrumb__list">
+                        <li class="has-separator">
+                            <a href="/">Trang chủ</a>
+                        </li>
+                        <li class="is-marked">
+                            <a href="#">Thông tin cả nhân</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--====== End - Section 1 ======-->
+<!--====== Section 2 ======-->
+<div class="u-s-p-b-30">
+
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="dash">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-12">
+
+                        <!--====== Dashboard Features ======-->
+                        @await Component.InvokeAsync("DashboardFeatures",Model.NameDash)
+                        <!--====== End - Dashboard Features ======-->
+                    </div>
+                    <div class="col-lg-9 col-md-12">
+                        <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30">
+                            <div class="dash__pad-2">
+                                <h1 class="dash__h1 u-s-m-b-30">Thông tin cả nhân</h1>
+                                <div class="row">
+                                    <div class="col-lg-3 u-s-m-b-30">
+                                        <img class="dash__text" style="width: 170px;height: 150px;background-image: none;background-repeat: no-repeat;background-position: center center;background-size: cover;" src="@imageUser" alt="Ảnh đại diện" />
+                                    </div>
+                                    <div class="col-lg-9 u-s-m-b-30">
+                                        <div class="row">
+                                            <div class="col-lg-4 u-s-m-b-30">
+                                                <h2 class="dash__h2 u-s-m-b-8">Tên đăng nhập</h2>
+                                                <span class="dash__text">@Model.AccountViewModel.UserName</span>
+                                            </div>
+                                            <div class="col-lg-4 u-s-m-b-30">
+                                                <h2 class="dash__h2 u-s-m-b-8">Họ và tên</h2>
+                                                <span class="dash__text">@Model.AccountViewModel.Name</span>
+                                            </div>
+                                            <div class="col-lg-4 u-s-m-b-30">
+                                                <h2 class="dash__h2 u-s-m-b-8">Email</h2>
+                                                <span class="dash__text">@Model.AccountViewModel.Email</span>
+                                            </div>
+                                            <div class="col-lg-4 u-s-m-b-30">
+                                                <h2 class="dash__h2 u-s-m-b-8">Số điện thoại</h2>
+                                                <span class="dash__text">@Model.AccountViewModel.PhoneNumber</span>
+                                            </div>
+                                            <div class="col-lg-4 u-s-m-b-30">
+                                                <h2 class="dash__h2 u-s-m-b-8">Ngày sinh</h2>
+                                                <span class="dash__text">@Model.AccountViewModel.Dob.ToString("dd/MM/yyyy")</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="u-s-m-b-16">
+                                            <a class="dash__custom-link btn--e-transparent-brand-b-2" href="/my-edit-profile.html">Chỉnh sửa thông tin</a>
+                                        </div>
+                                        <div>
+                                            <a class="dash__custom-link btn--e-brand-b-2" href="/change-my-password.html">Đổi mật khẩu</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====== End - Section Content ======-->
+</div>
+<!--====== End - Section 2 ======-->

@@ -1,0 +1,97 @@
+﻿@model RegisterRequest
+<!--====== Section 1 ======-->
+<div class="u-s-p-y-30">
+
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="container">
+            <div class="breadcrumb">
+                <div class="breadcrumb__wrap">
+                    <ul class="breadcrumb__list">
+                        <li class="has-separator">
+                            <a href="/">Trang chủ</a>
+                        </li>
+                        <li class="is-marked">
+
+                            <a href="#">Đăng ký</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--====== End - Section 1 ======-->
+<!--====== Section 2 ======-->
+<div class="u-s-p-b-30">
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="container">
+            <div class="row row--center">
+                <div class="col-lg-6 col-md-8 u-s-m-b-30">
+                    <div class="l-f-o">
+                        <div class="l-f-o__pad-box">
+                            <h1 class="u-s-m-b-30" style="text-align: center; align-items: center; font-size: 35px; line-height: 30px; color: black">Đăng ký</h1>
+                            <form class="l-f-o__form" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" enctype="multipart/form-data">
+                                <div asp-validation-summary="All" class="text-error u-s-m-b-15"></div>
+                                <div class="u-s-m-b-30">
+                                    <label class="gl-label" for="reg-username">Tên đăng nhập <sup>*</sup></label>
+                                    <input class="input-text input-text--primary-style" name="UserName" type="text" asp-for="UserName" id="reg-username" placeholder="Nhập tên đăng nhập">
+                                    <span asp-validation-for="UserName" class="text-error"></span>
+                                </div>
+                                <div class="u-s-m-b-30">
+                                    <label class="gl-label" for="reg-fname">Họ và tên <sup>*</sup></label>
+                                    <input class="input-text input-text--primary-style" name="Name" type="text" asp-for="Name" id="reg-fname" placeholder="Nhập họ và tên">
+                                    <span asp-validation-for="Name" class="text-error"></span>
+                                </div>
+                                <div class="u-s-m-b-30">
+                                    <label class="gl-label" for="reg-email">Email <sup>*</sup></label>
+                                    <input class="input-text input-text--primary-style" name="Email" type="email" asp-for="Email" id="reg-email" placeholder="Nhập email">
+                                    <span asp-validation-for="Email" class="text-error"></span>
+                                </div>
+                                <div class="u-s-m-b-30">
+                                    <label class="gl-label" for="reg-dob">Ngày sinh <sup>*</sup></label>
+                                    <input class="input-text input-text--primary-style" name="Dob" type="date" asp-for="Dob" id="reg-dob" placeholder="Nhập ngày sinh">
+                                    <span asp-validation-for="Dob" class="text-error"></span>
+                                </div>
+                                <div class="u-s-m-b-30">
+
+                                    <label class="gl-label" for="reg-password">Mật khẩu <sup>*</sup></label>
+                                    <input class="input-text input-text--primary-style" name="Password" type="password" asp-for="Password" id="reg-password" placeholder="Nhập mật khẩu">
+                                    <span asp-validation-for="Password" class="text-error"></span>
+                                    </div>
+                                <div class="u-s-m-b-30">
+
+                                    <label class="gl-label" for="reg-confirm-password">Xác nhận mật khẩu <sup>*</sup></label>
+                                    <input class="input-text input-text--primary-style" name="ConfirmPassword" type="password" asp-for="ConfirmPassword" id="reg-confirm-password" placeholder="Nhập xác nhận mật khẩu">
+                                    <span asp-validation-for="ConfirmPassword" class="text-error"></span>
+                                </div>
+                                <div class="u-s-m-b-30">
+                                    <label class="gl-label" for="reg-phone-number">Điện thoại <sup>*</sup></label>
+                                    <input type="text" asp-for="PhoneNumber" name="PhoneNumber" class="input-text input-text--primary-style" id="reg-phone-number" placeholder="Nhập số điện thoại" />
+                                    <span asp-validation-for="PhoneNumber" class="text-error"></span>
+                                </div>
+                                <div class="u-s-m-b-30">
+                                    <label class="gl-label" for="reg-avatar">Ảnh đại diện <sup>*</sup></label>
+                                    <input type="file" accept="image/*" asp-for="Avatar" name="Avatar" class="input-text" id="reg-avatar" />
+                                </div>
+                                <div class="u-s-m-b-30">
+                                    <recaptcha />
+                                    <span class="text-error" id="recaptchaErrorMessage"></span>
+                                </div>
+                                <div class="u-s-m-b-15">
+                                    <button class="btn btn--e-transparent-brand-b-2" type="submit">Tạo</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====== End - Section Content ======-->
+</div>
+<!--====== End - Section 2 ======-->
+@section Scripts {
+    <recaptcha-script validation-message-element-id="recaptchaErrorMessage" />
+}

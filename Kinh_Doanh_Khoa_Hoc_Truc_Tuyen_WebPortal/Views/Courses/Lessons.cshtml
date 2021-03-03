@@ -1,0 +1,245 @@
+﻿@using Kinh_Doanh_Khoa_Hoc_Truc_Tuyen_WebPortal.Extensions
+@model LessonsCatalogViewModel
+@{
+    var env = "https://localhost:44342";
+}
+@section Scripts{
+    <script src="~/assets/js/custom/customLesson.min.js" asp-append-version="true"></script>
+    <script>
+        var products = new LessonJquery();
+        products.initialize();
+    </script>
+}
+<input type="hidden" id="hid_lesson_id" value="@Model.LessonViewModel.Id" />
+<input type="hidden" id="hid_current_login_id" value="@User.GetUserId()" />
+<input type="hidden" id="hid_current_login_name" value="@User.Identity.Name" />
+<input type="hidden" id="hid_number_of_comments" value="@Model.CommentViewModels.Count" />
+<!--====== Section 1 ======-->
+<div class="u-s-p-y-30">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <!--====== Product Breadcrumb ======-->
+                <div class="pd-breadcrumb u-s-m-b-15">
+                    <ul class="pd-breadcrumb__list">
+                        <li class="has-separator">
+                            <a href="/">Trang Chủ</a>
+                        </li>
+                        <li class="has-separator">
+                            <a href="/courses.html?categoryId=@Model.CourseViewModel.CategoryId">@Model.CourseViewModel.CategoryName</a>
+                        </li>
+                        <li class="has-separator">
+                            <a href="/courses-@(Model.CourseViewModel.Id).html">@Model.CourseViewModel.Name</a>
+                        </li>
+                        <li class="is-marked">
+                            <a href="#">@Model.LessonViewModel.Name</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--====== End - Product Breadcrumb ======-->
+            </div>
+            <div class="col-lg-7">
+                <!--====== Product Detail Zoom ======-->
+                <div class="fluid-width-video-wrapper" style="width: auto; height:auto">
+                    @*<iframe src="@(env + Model.LessonViewModel.VideoPath)" width="650" height="365" allowfullscreen="" name="@Model.LessonViewModel.Name"></iframe>*@
+                    <video width="650" height="365" controls>
+                        <source src="@(env + Model.LessonViewModel.VideoPath)" type="video/mp4">
+                        Trang web của bạn không hỗ trợ định dạng video này
+                    </video>
+                </div>
+                <!--====== End - Product Detail Zoom ======-->
+            </div>
+            <div class="col-lg-5">
+                <!--====== Product Detail Tab ======-->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="pd-tag">
+                                <div style="border: 1px solid #f7f7f7; padding: 0 0 0 15px; margin: 0; background-color: #f7f7f7;">
+                                    <ul class="nav pd-tab__list">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" href="#pd-lesson">Bài Học</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="view-review" data-toggle="tab" href="#pd-rev">
+                                                Bình Luận
+                                                <span id="span-count-comments">(@Model.CommentViewModels.Count)</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div style="border: 1px solid #f7f7f7;background-color: #f7f7f7;">
+                                    <div class="tab-content gl-scroll" style="max-height: 600px;overflow-y: auto;padding: 20px;margin: 0;">
+                                        <!--====== Tab 1 ======-->
+                                        <div class="tab-pane fade show active" id="pd-lesson">
+                                            <div class="pd-tab__tag">
+                                                <div>
+                                                    <h4 class="content_courses">Nội Dung Khóa Học</h4>
+                                                    <ul class="lesson-list">
+                                                        @foreach (var modelLessonViewModel in Model.LessonViewModels)
+                                                        {
+                                                            if (modelLessonViewModel.Id == Model.LessonViewModel.Id)
+                                                            {
+                                                                <li class="lesson-list--active">
+                                                                    <div>
+                                                                        <a href="/lessons-with-courses-@(modelLessonViewModel.CourseId).html?id=@(Model.LessonViewModel.CourseId)&lessonId=@(modelLessonViewModel.Id)" style="display: grid;margin-right: 25px">
+                                                                            @modelLessonViewModel.Name
+                                                                            <span style="font-size: 12px; font-weight: 400; text-align: justify; display: inline">
+                                                                                <i class="far fa-clock"></i>
+                                                                                @modelLessonViewModel.Times
+                                                                            </span>
+                                                                        </a>
+                                                                        @if (!string.IsNullOrEmpty(modelLessonViewModel.Attachment))
+                                                                        {
+                                                                            <a href="@(env + modelLessonViewModel.Attachment)">
+                                                                                <i class="fas fa-download"></i>
+                                                                            </a>
+                                                                        }
+                                                                    </div>
+                                                                </li>
+                                                            }
+                                                            else
+                                                            {
+                                                                <li class="lesson-list">
+                                                                    <div>
+                                                                        <a href="/lessons-with-courses-@(modelLessonViewModel.CourseId).html?id=@(Model.LessonViewModel.CourseId)&lessonId=@(modelLessonViewModel.Id)" style="display: grid; margin-right: 25px">
+                                                                            @modelLessonViewModel.Name
+                                                                            <span style="font-size: 12px; font-weight: 400; text-align: justify; display: inline">
+                                                                                <i class="far fa-clock"></i>
+                                                                                @modelLessonViewModel.Times
+                                                                            </span>
+                                                                        </a>
+                                                                        @if (!string.IsNullOrEmpty(modelLessonViewModel.Attachment))
+                                                                        {
+                                                                            <a href="@(env + modelLessonViewModel.Attachment)">
+                                                                                <i class="fas fa-download"></i>
+                                                                            </a>
+                                                                        }
+                                                                    </div>
+                                                                </li>
+                                                            }
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--====== End - Tab 1 ======-->
+                                        <!--====== Tab 2 ======-->
+                                        <div class="tab-pane" id="pd-rev">
+                                            <div class="pd-tab__rev">
+                                                @if (!User.Identity.IsAuthenticated)
+                                                {
+                                                    <div class="u-s-m-b-30">
+                                                        <div class="pd-tab__rev-score">
+                                                            <div class="u-s-m-b-8">
+                                                                <h2 id="number-comments-non-login">@Model.CommentViewModels.Count Bình Luận</h2>
+                                                            </div>
+                                                            <div class="u-s-m-b-8">
+                                                                <h4><a href="/login.html">Bạn cần đăng nhập để có thể bình luận!</a></h4>
+                                                            </div>
+
+                                                            <span class="gl-text">Hãy nói cho chúng tôi biết cảm nghĩ của bạn về khóa học này!</span>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="u-s-m-b-60">
+                                                        <form class="pd-tab__rev-f2" action="/Courses/AddNewComment" method="post" id="comment-form">
+                                                            <input type="hidden" name="entityId" value="@Model.LessonViewModel.Id" />
+                                                            <input type="hidden" name="entityType" value="lessons" />
+                                                            <div class="rev-f2__group">
+                                                                <div class="u-s-m-b-10">
+                                                                    <textarea class="text-area text-area--primary-style" name="content" placeholder="Bình Luận" id="reviewer-text"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="u-s-m-b-15">
+                                                                <button class="btn btn--e-brand-shadow" type="submit">Gửi</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                }
+                                                <div class="u-s-m-b-30">
+                                                    <form class="pd-tab__rev-f1">
+                                                        <div class="rev-f1__group">
+                                                            <div class="u-s-m-b-15">
+                                                                <h2 id="number-comments">@Model.CommentViewModels.Count Bình Luận</h2>
+                                                            </div>
+                                                        </div>
+                                                        <div class="rev-f1__review" id="comment_list"></div>
+                                                        <div class="u-s-m-y-60">
+                                                            <button class="btn btn--e-brand-shadow" id="comment-pagination" data-page-index="1" style="display:none" type="button">Xem thêm bình luận</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--====== End - Tab 2 ======-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--====== End - Product Detail Tab ======-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="tmpl_children_comments" type="x-tmpl-mustache">
+<div class="review-o u-s-p-t-15 u-s-p-b-30" id="comment-child-{{id}}">
+    <div class="review-o__info u-s-m-b-8" style="display: flex; justify-content: space-between;">
+        <div style="width: auto; margin-right: 20px; display: grid">
+            <span class="review-o__name">{{ownerUser}}</span>
+            <span class="review-o__date" style="margin-bottom: 10px;margin-top: 10px">{{creationTime}}</span>
+        </div>
+    </div>
+    <p class="review-o__text" style="text-align: justify; align-items: center">{{content}}</p>
+</div>
+</script>
+
+<script id="tmpl_comments" type="x-tmpl-mustache">
+<!-- Parent Comment-->
+<div>
+    <div class="review-o">
+        <div class="review-o__info u-s-m-b-8" style="display: flex; justify-content: space-between;">
+            <div style="width: auto; margin-right: 20px; display: grid">
+                <span class="review-o__name">{{ownerUser}}</span>
+                <span class="review-o__date" style="margin-bottom: 10px;margin-top: 10px">{{creationTime}}</span>
+            </div>
+            <div style="margin-right: 10px">
+                <span class="review-o__name" style="font-size: 16px; margin-right: 10px">
+                   <a class="comment-reply-link" href="#" data-commentid="{{id}}"> <i class="fas fa-reply" style="color: #ff4500;"></i></a>
+                </span>
+            </div>
+        </div>
+        <p class="review-o__text" style="text-align: justify; align-items: center">{{content}}</p>
+    </div>
+      <div id="reply_comment_{{id}}"></div>
+    <!-- Children Comment-->
+    <div style="margin-left: 70px;" id="children_comments_{{id}}">
+     {{{childrenHtml}}}
+    </div>
+    <!-- End Children Comment-->
+</div>
+<!-- End Parent Comment-->
+</script>
+<script id="tmpl_reply_comment" type="x-tmpl-mustache">
+<div class="u-s-m-y-30">
+    <form class="pd-tab__rev-f2" action="/Courses/AddNewComment" method="post" id="frm_reply_comment_{{commentId}}">
+        <input type="hidden" name="entityId" value="@Model.LessonViewModel.Id" />
+        <input type="hidden" name="replyId" value="{{commentId}}" />
+        <input type="hidden" name="entityType" value="lessons" />
+        <div class="rev-f2__group">
+            <div class="u-s-m-b-10">
+                <textarea class="text-area text-area--primary-style" name="content" placeholder="Bình Luận" id="txt_reply_content_{{commentId}}"></textarea>
+            </div>
+        </div>
+        <div class="u-s-m-b-15">
+            <button class="btn btn--e-brand-shadow" id="btn_send_reply" type="submit">Trả lời</button>
+        </div>
+    </form>
+</div>
+</script>

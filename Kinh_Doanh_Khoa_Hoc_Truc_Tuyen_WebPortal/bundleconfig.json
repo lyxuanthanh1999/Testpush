@@ -1,0 +1,56 @@
+[
+  {
+    "outputFileName": "wwwroot/assets/js/custom/customBase.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/custom/customBase.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/custom/customCart.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/custom/customCart.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/custom/customCheckout.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/custom/customCheckout.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/custom/customContact.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/custom/customContact.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/custom/customCourseDetail.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/custom/customCourseDetail.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/custom/customLesson.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/custom/customLesson.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/custom/customListCourses.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/custom/customListCourses.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/custom/customProfile.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/custom/customProfile.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/js/custom/customSignalR.min.js",
+    "inputFiles": [
+      "wwwroot/assets/js/custom/customSignalR.js"
+    ]
+  }
+]

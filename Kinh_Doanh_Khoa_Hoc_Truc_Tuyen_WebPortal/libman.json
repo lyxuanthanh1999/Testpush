@@ -1,0 +1,54 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "jquery-validation-unobtrusive@3.2.11",
+      "destination": "wwwroot/lib/jquery-validation-unobtrusive/"
+    },
+    {
+      "library": "jquery@3.5.1",
+      "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "jquery-validate@1.19.2",
+      "destination": "wwwroot/lib/jquery-validate/"
+    },
+    {
+      "library": "moment.js@2.29.1",
+      "destination": "wwwroot/lib/moment.js/"
+    },
+    {
+      "library": "jquery-ui-map@3.0-rc1",
+      "destination": "wwwroot/lib/jquery-ui-map/"
+    },
+    {
+      "library": "bootbox.js@5.5.2",
+      "destination": "wwwroot/lib/bootbox.js/"
+    },
+    {
+      "library": "jqueryui@1.12.1",
+      "destination": "wwwroot/lib/jqueryui/"
+    },
+    {
+      "library": "signalr.js@2.4.1",
+      "destination": "wwwroot/lib/signalr.js/"
+    },
+    {
+      "library": "analytics.js@2.9.1",
+      "destination": "wwwroot/lib/analytics.js/"
+    },
+    {
+      "library": "mustache.js@4.1.0",
+      "destination": "wwwroot/lib/mustache.js/"
+    },
+    {
+      "library": "notify@0.4.2",
+      "destination": "wwwroot/lib/notify/"
+    },
+    {
+      "library": "microsoft-signalr@5.0.1",
+      "destination": "wwwroot/lib/microsoft-signalr/"
+    }
+  ]
+}

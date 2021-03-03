@@ -1,0 +1,54 @@
+<nav class="navbar navbar-expand-lg fixed-top">
+    <a class="navbar-brand" href="#">Administration</a>
+    <button (click)="toggleSidebar()" class="navbar-toggler" type="button">
+        <!-- <span class="navbar-toggler-icon"></span> -->
+        <i aria-hidden="true" class="fa fa-bars text-muted"></i>
+    </button>
+    <div class="collapse navbar-collapse">
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown" ngbDropdown>
+                <a class="nav-link" href="javascript:void(0)" ngbDropdownToggle>
+                    <i class="fa fa-bell" style="margin-right: 20px;"> <span class="badge badge-info" style="position: absolute; top: 0px;">{{totalUnred}}</span></i> <b class="caret"></b><span class="sr-only">(current)</span>
+                </a>
+                <div class="dropdown-menu-right" style="width: 350px;" ngbDropdownMenu>
+                    <a *ngFor="let item of announcement" class="dropdown-item" href="javascript:void(0)" (click)="markAsRead(item.id)">
+                        <div class="media">
+                            <img alt="Generic placeholder image" width="50px" class="d-flex align-self-center mr-3" src="{{backendApiUrl + item.image}}" />
+                            <div class="media-body">
+                                <h5 class="mt-0 mb-1" style="margin: 0; font-size: 13px; font-weight: 600;">{{item.title}}</h5>
+                                <p class="small text-muted" style="margin: 0;"><i class="fa fa-clock-o"></i> {{item.creationTime | convertDate}}</p>
+                                <p class="last" style="font-size: 12px;margin: 0; white-space: initial;">{{item.content}}</p>
+                            </div>
+                        </div>
+                    </a>
+                    <span *ngIf="!announcement" class="dropdown-item" style="text-align: center; align-items: center;">Không có thông báo chưa đọc</span>
+                    <li class="dropdown-divider"></li>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLinkActive]="[ 'router-link-active'] " [routerLink]="['/account/announcement']" style="text-align: center; align-items: center;">
+                        {{ 'View All' }}
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" ngbDropdown>
+                <a class="nav-link" href="javascript:void(0)" ngbDropdownToggle>
+                    <img alt="Generic placeholder image" width="30px" src="{{avatar}}" />
+                     {{userName}} <b class="caret"></b>
+                </a>
+                <div class="dropdown-menu-right" ngbDropdownMenu>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLinkActive]="[ 'router-link-active'] " [routerLink]="['/account/account-detail']">
+                        <i class="fa fa-fw fa-user"></i> {{ 'Thông tin cá nhân' }}
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLinkActive]="[ 'router-link-active'] " [routerLink]="['/account/announcement']">
+                        <i class="fa fa-fw fa-envelope"></i> {{ 'Hòm thư' }}
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLinkActive]="[ 'router-link-active'] " [routerLink]="['/account/change-password']">
+                        <i class="fa fa-fw fa-gear"></i> {{ 'Đổi mật khẩu' }}
+                    </a>
+                    <a (click)="signout()" [routerLink]="['/login']" class="dropdown-item">
+                        <i class="fa fa-fw fa-power-off"></i> {{ 'Đăng xuất' }}
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

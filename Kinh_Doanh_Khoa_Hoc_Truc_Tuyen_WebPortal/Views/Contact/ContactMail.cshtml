@@ -1,0 +1,23 @@
+﻿@model FeedBackViewModel
+<table>
+    <tr>
+        <td>Họ và tên: </td>
+        <td>@Model.Name</td>
+    </tr>
+    <tr>
+        <td>Ngày tạo: </td>
+        <td>@Model.CreationTime.ToString("dd/MM/yyyy HH:mm:ss")</td>
+    </tr>
+    <tr>
+        <td>Số điện thoại: </td>
+        <td>@Model.PhoneNumber</td>
+    </tr>
+    <tr>
+        <td>Email: </td>
+        <td>@Model.Email</td>
+    </tr>
+    <tr>
+        <td>Tin nhắn: </td>
+        <td>@Model.Message</td>
+    </tr>
+</table>

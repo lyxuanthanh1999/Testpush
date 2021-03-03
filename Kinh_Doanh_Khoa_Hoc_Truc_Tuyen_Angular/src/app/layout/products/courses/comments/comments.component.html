@@ -1,0 +1,66 @@
+<div class="animated fadeIn">
+    <p-panel #pnl>
+        <p-header style="width: 100%">
+            <div class="p-grid">
+                <div class="p-col-12">
+                    <h3>Danh sách bình luận</h3>
+                </div>
+                <div class="p-col-7">
+                    <button style="margin-right: 5px;" apPermission appFunction="Courses" appAction="View" pButton type="button" label="Back" icon="fa fa-angle-left" class="p-button-success" (click)="Back()"></button>
+                    <button style="margin-right: 5px;" appPermission appFunction="Courses" appAction="View" pButton type="button" label="Chi Tiết" icon="fa fa-eye" class="p-button-info" *ngIf="selectedItems.length== 1" (click)="showDetailModal()"></button>
+                    <button style="margin-right: 5px;" appPermission appFunction="Courses" appAction="Delete" pButton type="button" label="Xóa" icon="fa fa-trash" class="p-button-danger" *ngIf="selectedItems.length > 0" (click)="deleteItems()"></button>
+                </div>
+                <div class="p-col-5">
+                    <input style="width: 100%;" pInputText (keyup.enter)="loadData()" [(ngModel)]="keyword" placeholder="Nhập từ khóa..." type="text">
+                </div>
+            </div>
+        </p-header>
+
+        <p-table #dt [value]="items" [(selection)]="selectedItems" [metaKeySelection]="true" [responsive]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="p-text-center" style="width: 50px">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th class="p-text-center" [pSortableColumn]="'content'">Nội dung
+                        <p-sortIcon [field]="'content'"></p-sortIcon>
+                    </th>
+                    <th style="width: 200px" class="p-text-center" [pSortableColumn]="'creationTime'">Ngày tạo
+                        <p-sortIcon [field]="'creationTime'"></p-sortIcon>
+                    </th>
+                    <th class="p-text-center" style="width: 20%" [pSortableColumn]="'ownerUser'">Người tạo
+                        <p-sortIcon [field]="'ownerUser'"></p-sortIcon>
+                    </th>
+                    <th class="p-text-center" style="width: 20%" [pSortableColumn]="'replyUser'">Trả lời cho bình luận
+                        <p-sortIcon [field]="'replyUser'"></p-sortIcon>
+                    </th>
+                </tr>
+
+            </ng-template>
+            <ng-template pTemplate="body" let-row>
+                <tr [pSelectableRow]="row" [pSelectableRowIndex]="row">
+                    <td style="width: 50px">
+                        <p-tableCheckbox [value]="row"></p-tableCheckbox>
+                    </td>
+                    <td>{{row.content | formatData: 30}}</td>
+                    <td style="width: 200px">{{row.creationTime | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+                    <td>{{row.ownerUser | formatData: 20}}</td>
+                    <td>{{row.replyUser | formatData: 20}}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate=" summary">
+                <div style="text-align: left" class="font-weight-bold">
+                    Tổng số bản ghi: {{totalRecords | number}}
+                </div>
+            </ng-template>
+        </p-table>
+        <p-footer>
+
+            <p-paginator dropdownAppendTo="body" [rows]="pageSize" [totalRecords]="totalRecords" (onPageChange)="pageChanged($event)" [rowsPerPageOptions]="[5,10,20,100]"></p-paginator>
+            <p-blockUI [target]="pnl" [blocked]="blockedPanel">
+                <p-progressSpinner [style]="{width: '100px', height: '100px', position: 'absolute',top: '25%',left: '50%'}" strokeWidth="2" animationDuration=".5s"></p-progressSpinner>
+            </p-blockUI>
+        </p-footer>
+    </p-panel>
+
+</div>

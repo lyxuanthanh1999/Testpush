@@ -1,0 +1,32 @@
+https://testkhol.zendesk.com/chat/agent#widget/forms
+
+Thẻ test: Thẻ thành công
+Ngân hàng	NCB
+Số thẻ	9704198526191432198
+Tên chủ thẻ	NGUYEN VAN A
+Ngày phát hành	07/15
+Mật khẩu OTP	123456
+
+Thẻ test: Thẻ không đủ số dư
+Ngân hàng: NCB
+Số thẻ: 9704195798459170488
+Tên chủ thẻ:NGUYEN VAN A
+Ngày phát hành:07/15
+
+The test: Thẻ chưa kích hoạt
+Ngân hàng: NCB
+Số thẻ: 9704192181368742
+Tên chủ thẻ:NGUYEN VAN A
+Ngày phát hành:07/15
+
+Thẻ test: Thẻ bị khóa
+Ngân hàng: NCB
+Số thẻ: 9704193370791314
+Tên chủ thẻ:NGUYEN VAN A
+Ngày phát hành:07/15
+
+Thẻ test: Thẻ bị hết hạn
+Ngân hàng: NCB
+Số thẻ: 9704194841945513
+Tên chủ thẻ:NGUYEN VAN A
+Ngày phát hành:07/15
